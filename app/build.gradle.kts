@@ -73,6 +73,9 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:22.2.0")
     implementation("com.google.firebase:firebase-bom:32.5.0")
     implementation("com.google.firebase:firebase-analytics-ktx:21.5.0")
+//    Glide
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
     implementation("androidx.cardview:cardview:1.0.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

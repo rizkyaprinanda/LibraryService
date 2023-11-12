@@ -106,7 +106,7 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this, "Selamat datang $email", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
-
+                    finish()
                 } else {
                     Toast.makeText(this, "${it.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
@@ -138,6 +138,7 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener{
                 startActivity(Intent(this, HomeActivity::class.java))
+                finish()
             }
             .addOnFailureListener{error ->
                 Toast.makeText(this, error.localizedMessage, LENGTH_SHORT).show()

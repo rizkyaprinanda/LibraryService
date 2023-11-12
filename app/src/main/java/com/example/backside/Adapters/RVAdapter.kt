@@ -1,21 +1,26 @@
 package com.example.backside.Adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.backside.R
+import com.example.backside.ResponseItem // Ganti dengan ResponseItem
 import com.example.backside.ResponseModel
 
 class RVAdapter(
     private val context: Context,
-    private val datalist: ArrayList<ResponseModel>
-) :RecyclerView.Adapter<RVAdapter.MyViewHolder>() {
-    class MyViewHolder(val view: View): RecyclerView.ViewHolder(view){
+    private val datalist: ArrayList<ResponseItem>// Ganti dengan List<ResponseItem>
+) : RecyclerView.Adapter<RVAdapter.MyViewHolder>() {
+
+    class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val tvName = view.findViewById<TextView>(R.id.tvNama)
         val tvUsername = view.findViewById<TextView>(R.id.tvUsername)
         val tvEmail = view.findViewById<TextView>(R.id.tvEmail)
@@ -28,20 +33,53 @@ class RVAdapter(
         return MyViewHolder(itemView)
     }
 
+    val MAX_OVERVIEW_LENGTH = 100
+    val MAX_TITLE_LENGTH = 35
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.tvName.text = datalist.get(position).name
-        holder.tvUsername.text = datalist.get(position).username
-        holder.tvEmail.text = datalist.get(position).email
-        holder.cvMain.setOnClickListener{
-            Toast.makeText(context, "" + datalist.get(position).username, Toast.LENGTH_SHORT).show()
+        val currentItem = datalist[position]
+
+        // Batasi overview menjadi maksimal 100 karakter
+        val overviewText = if (currentItem.overview.length > MAX_OVERVIEW_LENGTH) {
+            currentItem.overview.substring(0, MAX_OVERVIEW_LENGTH) + "..."
+        } else {
+            currentItem.overview
+        }
+
+        // Batasi title menjadi maksimal 35 karakter
+        val titleText = if (currentItem.title.length > MAX_TITLE_LENGTH) {
+            currentItem.title.substring(0, MAX_TITLE_LENGTH) + "..."
+        } else {
+            currentItem.title
+        }
+
+        val formattedRating = String.format("%.1f", currentItem.voteAverage)
+
+        holder.tvName.text = "Rating \t$formattedRating"
+        holder.tvUsername.text = currentItem.title
+        holder.tvEmail.text = overviewText
+
+        val image = "https://image.tmdb.org/t/p/w500${currentItem.backdropPath}"
+        Glide.with(holder.view)
+            .load(image)
+            .centerCrop()
+            .into(holder.view.findViewById<ImageView>(R.id.imageView))
+
+
+
+        holder.cvMain.setOnClickListener {
+            Toast.makeText(context, "" + currentItem.title, Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun getItemCount(): Int = datalist.size
 
-    fun setData(data: ArrayList<ResponseModel>){
+    // Hapus fungsi setData karena datalist sudah diinisialisasi di konstruktor
+
+    fun setData(data: List<ResponseItem>) {
         datalist.clear()
         datalist.addAll(data)
         notifyDataSetChanged()
     }
+
+
 }

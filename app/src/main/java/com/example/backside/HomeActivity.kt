@@ -35,6 +35,8 @@ class HomeActivity : AppCompatActivity() {
 
     lateinit var googleSignInClient: GoogleSignInClient
 
+    private val apiKey = "c91b07124c855f7577ce56962639cd93"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +48,11 @@ class HomeActivity : AppCompatActivity() {
         binding.rvMain.adapter = adapter
         binding.rvMain.setHasFixedSize(true)
 
-        remoteGetUsers()
+        remoteGetPopularMovies()
+
+
+
+        // ... (melanjutkan penanganan respons dan kegagalan seperti sebelumnya)
 
         val sessionManager = SessionManager(this)
 
@@ -95,25 +101,28 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    fun remoteGetUsers(){
-        ApiClient.apiService.getUsers().enqueue(object : Callback<ArrayList<ResponseModel>>{
+    // Ganti tipe data respons di metode ini
+    fun remoteGetPopularMovies(){
+        ApiClient.apiService.getPopularMovies().enqueue(object : Callback<ResponseModel>{
             override fun onResponse(
-                call: Call<ArrayList<ResponseModel>>,
-                response: Response<ArrayList<ResponseModel>>
+                call: Call<ResponseModel>,
+                response: Response<ResponseModel>
             ) {
                 if(response.isSuccessful){
-                    val data = response.body()
-                    setDataToAdapter(data!!)
+                    val data = response.body()?.results
+                    Log.d("MovieResponse", data.toString())
+                    data?.let { setDataToAdapter(it) }
                 }
             }
 
-            override fun onFailure(call: Call<ArrayList<ResponseModel>>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseModel>, t: Throwable) {
                 Log.d("Error", "" + t.stackTraceToString())
             }
         })
     }
 
-    fun setDataToAdapter( data: ArrayList<ResponseModel>){
+
+    fun setDataToAdapter(data: List<ResponseItem>){
         adapter.setData(data)
     }
 
