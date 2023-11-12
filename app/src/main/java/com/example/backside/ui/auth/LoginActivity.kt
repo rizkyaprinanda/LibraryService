@@ -60,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
                 val email = binding.edtEmailLogin.text.toString()
                 val password = binding.edtPasswordLogin.text.toString()
 
-                sessionManager.sessionLogin(email, password)
+                sessionManager.sessionLogin(email)
 
                 // Validasi email
                 if (email.isEmpty()){
@@ -97,8 +97,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-
-
     }
 
     private fun LoginFirebase(email: String, password: String) {
@@ -134,6 +132,9 @@ class LoginActivity : AppCompatActivity() {
 
     fun firebaseAuthWithGoogle(idToken: String){
         val credential = GoogleAuthProvider.getCredential(idToken, null)
+        val sessionManager = SessionManager(this)
+        val email = idToken
+        sessionManager.sessionLogin(email)
         auth.signInWithCredential(credential)
             .addOnCompleteListener{
                 startActivity(Intent(this, HomeActivity::class.java))

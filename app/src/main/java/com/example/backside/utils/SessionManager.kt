@@ -10,7 +10,6 @@ class SessionManager (context: Context) {
     // variabel key
     val keyPreference = "login"
     val keyName = "Email"
-    val keyPassword = "Password"
 
     init {
         sharedPreferences = context.getSharedPreferences(keyPreference, Context.MODE_PRIVATE)
@@ -18,16 +17,14 @@ class SessionManager (context: Context) {
     }
 
     // login
-    fun sessionLogin(name: String, pass: String) {
+    fun sessionLogin(name: String) {
         editor?.putString(keyName, name)
-        editor?.putString(keyPassword, pass)
         editor?.apply()
     }
 
     // logout
     fun sessionLogout(){
         editor?.remove(keyName)
-        editor?.remove(keyPassword)
         editor?.apply()
     }
 
@@ -35,11 +32,9 @@ class SessionManager (context: Context) {
     val name: String?
         get() = sharedPreferences?.getString(keyName, null)
 
-    val pass: String?
-        get() = sharedPreferences?.getString(keyPassword, null)
 
     fun isLogin() : Boolean {
-        if (!name.isNullOrEmpty() && !pass.isNullOrEmpty()){
+        if (!name.isNullOrEmpty()){
             return true
         }
             return false

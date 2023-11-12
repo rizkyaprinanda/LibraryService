@@ -35,7 +35,6 @@
         android:text="Apakah Anda ingin menemukan Ruang Perpustakaan Anda?"
         app:layout_constraintTop_toBottomOf="@+id/edtSearch"/>
 
-
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -72,7 +71,10 @@
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
                 android:layout_marginBottom="20dp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/secondary"
                 android:text="Logout"
+                android:textAllCaps="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rvMain" />
