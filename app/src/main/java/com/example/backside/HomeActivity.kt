@@ -4,19 +4,26 @@ import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.example.backside.databinding.ActivityLogin2Binding
+import com.example.backside.Adapters.RVAdapter
+import com.example.backside.databinding.ActivityHomeBinding
 import com.example.backside.ui.auth.LoginActivity
 import com.example.backside.utils.SessionManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import okhttp3.internal.notify
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityLogin2Binding
+    private lateinit var binding: ActivityHomeBinding
+    private lateinit var adapter: RVAdapter
     private lateinit var mAuth: FirebaseAuth
     companion object {
         private const val RC_SIGN_IN = 123
@@ -31,8 +38,15 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLogin2Binding.inflate(layoutInflater)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        adapter = RVAdapter(this, arrayListOf())
+
+        binding.rvMain.adapter = adapter
+        binding.rvMain.setHasFixedSize(true)
+
+        remoteGetUsers()
 
         val sessionManager = SessionManager(this)
 
@@ -79,6 +93,28 @@ class HomeActivity : AppCompatActivity() {
                 progressDialog.dismiss()
             }
         }
+    }
+
+    fun remoteGetUsers(){
+        ApiClient.apiService.getUsers().enqueue(object : Callback<ArrayList<ResponseModel>>{
+            override fun onResponse(
+                call: Call<ArrayList<ResponseModel>>,
+                response: Response<ArrayList<ResponseModel>>
+            ) {
+                if(response.isSuccessful){
+                    val data = response.body()
+                    setDataToAdapter(data!!)
+                }
+            }
+
+            override fun onFailure(call: Call<ArrayList<ResponseModel>>, t: Throwable) {
+                Log.d("Error", "" + t.stackTraceToString())
+            }
+        })
+    }
+
+    fun setDataToAdapter( data: ArrayList<ResponseModel>){
+        adapter.setData(data)
     }
 
 }

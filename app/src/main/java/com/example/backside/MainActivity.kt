@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
                 if (task.isSuccessful) {
                     val user = mAuth.currentUser
-                    val intent = Intent(applicationContext, Logout::class.java)
+                    val intent = Intent(applicationContext, LoginActivity::class.java)
                     startActivity(intent)
                     Toast.makeText(applicationContext, "Selamat Datang " + user?.displayName, Toast.LENGTH_SHORT).show()
                 } else {
