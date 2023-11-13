@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
+import com.example.backside.BooksActivity
 import com.example.backside.HomeActivity
 import com.example.backside.R
 import com.example.backside.utils.SessionManager
@@ -35,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
         val sessionManager = SessionManager(this)
 
         if (sessionManager.isLogin()){
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, BooksActivity::class.java)
             startActivity(intent)
             finish()
         } else {
@@ -104,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this){
                 if(it.isSuccessful){
                     Toast.makeText(this, "Selamat datang $email", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, HomeActivity::class.java)
+                    val intent = Intent(this, BooksActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {
@@ -137,7 +138,7 @@ class LoginActivity : AppCompatActivity() {
         sessionManager.sessionLogin(email)
         auth.signInWithCredential(credential)
             .addOnCompleteListener{
-                startActivity(Intent(this, HomeActivity::class.java))
+                startActivity(Intent(this, BooksActivity::class.java))
                 finish()
             }
             .addOnFailureListener{error ->

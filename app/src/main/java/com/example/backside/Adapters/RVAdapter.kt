@@ -1,7 +1,6 @@
 package com.example.backside.Adapters
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.backside.R
-import com.example.backside.ResponseItem // Ganti dengan ResponseItem
-import com.example.backside.ResponseModel
+import com.example.backside.ResponseItem
 
 class RVAdapter(
     private val context: Context,
@@ -55,7 +53,7 @@ class RVAdapter(
         val formattedRating = String.format("%.1f", currentItem.voteAverage)
 
         holder.tvName.text = "Rating \t$formattedRating"
-        holder.tvUsername.text = currentItem.title
+        holder.tvUsername.text = titleText
         holder.tvEmail.text = overviewText
 
         val image = "https://image.tmdb.org/t/p/w500${currentItem.backdropPath}"

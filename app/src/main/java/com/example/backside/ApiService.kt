@@ -8,5 +8,4 @@ interface ApiService {
     @GET("popular?api_key=c91b07124c855f7577ce56962639cd93")
     fun getPopularMovies(): Call<ResponseModel>
 
-    // Tambahkan fungsi-fungsi lainnya sesuai kebutuhan Anda
 }
