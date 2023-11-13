@@ -33,7 +33,7 @@ class BookAdapter(
         return MyViewHolder(itemView)
     }
 
-    val MAX_DESCRIPTION_LENGTH = 100
+    val MAX_DESCRIPTION_LENGTH = 150
     val MAX_TITLE_LENGTH = 35
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = dataList[position]
@@ -62,7 +62,7 @@ class BookAdapter(
         val image = currentItem.volumeInfo.imageLinks.thumbnail
         Glide.with(holder.view)
             .load(image)
-            .centerCrop()
+
             .into(holder.view.findViewById<ImageView>(R.id.imageView))
 
         holder.cvMain.setOnClickListener {
