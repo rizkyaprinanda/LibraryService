@@ -1,6 +1,8 @@
 package com.example.backside.ui.auth
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
@@ -32,6 +34,19 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        val logo = binding.logo
+
+// Mendapatkan gambar dari ImageView
+        val drawable = logo.drawable as BitmapDrawable
+        val bitmap = drawable.bitmap
+
+// Mendapatkan warna dominan dari gambar
+        val dominantColor = getDominantColor(bitmap)
+
+// Mengatur latar belakang dengan warna dominan
+        val content = binding.contents
+        content.setBackgroundColor(dominantColor)
 
         val sessionManager = SessionManager(this)
 
@@ -98,6 +113,12 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    private fun getDominantColor(bitmap: Bitmap?): Int {
+        // Menghitung warna dominan dari gambar
+        val newBitmap = bitmap?.let { Bitmap.createScaledBitmap(it, 1, 1, true) }
+        return newBitmap?.getPixel(0, 0) ?: 0
     }
 
     private fun LoginFirebase(email: String, password: String) {
