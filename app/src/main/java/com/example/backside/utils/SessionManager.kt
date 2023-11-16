@@ -1,12 +1,12 @@
-<<<<<<< HEAD
+
 package com.example.backside.utils
 
 import android.content.Context
 import android.content.SharedPreferences
 
 class SessionManager (context: Context) {
-    var sharedPreferences : SharedPreferences? = null
-    var editor : SharedPreferences.Editor? = null
+    var sharedPreferences: SharedPreferences? = null
+    var editor: SharedPreferences.Editor? = null
 
     // variabel key
     val keyPreference = "login"
@@ -24,7 +24,7 @@ class SessionManager (context: Context) {
     }
 
     // logout
-    fun sessionLogout(){
+    fun sessionLogout() {
         editor?.remove(keyName)
         editor?.apply()
     }
@@ -34,53 +34,10 @@ class SessionManager (context: Context) {
         get() = sharedPreferences?.getString(keyName, null)
 
 
-    fun isLogin() : Boolean {
-        if (!name.isNullOrEmpty()){
+    fun isLogin(): Boolean {
+        if (!name.isNullOrEmpty()) {
             return true
         }
-            return false
+        return false
     }
-=======
-package com.example.backside.utils
-
-import android.content.Context
-import android.content.SharedPreferences
-
-class SessionManager (context: Context) {
-    var sharedPreferences : SharedPreferences? = null
-    var editor : SharedPreferences.Editor? = null
-
-    // variabel key
-    val keyPreference = "login"
-    val keyName = "Email"
-
-    init {
-        sharedPreferences = context.getSharedPreferences(keyPreference, Context.MODE_PRIVATE)
-        editor = sharedPreferences?.edit()
-    }
-
-    // login
-    fun sessionLogin(name: String) {
-        editor?.putString(keyName, name)
-        editor?.apply()
-    }
-
-    // logout
-    fun sessionLogout(){
-        editor?.remove(keyName)
-        editor?.apply()
-    }
-
-    // validasi
-    val name: String?
-        get() = sharedPreferences?.getString(keyName, null)
-
-
-    fun isLogin() : Boolean {
-        if (!name.isNullOrEmpty()){
-            return true
-        }
-            return false
-    }
->>>>>>> 613c4f9ab1ee8a788534ea4962eaf2f86539cbb5
 }
