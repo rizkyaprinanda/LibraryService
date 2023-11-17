@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-<<<<<<< HEAD
+
 //    signingConfigs {
 //        getByName("debug") {
 //            storeFile = file("C:\\MyKeyStore\\keystore.jks")
@@ -15,16 +15,7 @@ android {
 //            keyPassword = "Vivo2804"
 //        }
 //    }
-=======
-    signingConfigs {
-        getByName("debug") {
-            storeFile = file("C:\\MyKeyStore\\keystore.jks")
-            storePassword = "Vivo2804"
-            keyAlias = "keybacsideapp"
-            keyPassword = "Vivo2804"
-        }
-    }
->>>>>>> 613c4f9ab1ee8a788534ea4962eaf2f86539cbb5
+
     namespace = "com.example.backside"
     compileSdk = 34
 
@@ -64,11 +55,10 @@ android {
 
 dependencies {
 
-<<<<<<< HEAD
+
     implementation("com.caverock:androidsvg:1.4")
 
-=======
->>>>>>> 613c4f9ab1ee8a788534ea4962eaf2f86539cbb5
+
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
