@@ -77,7 +77,6 @@ class BooksActivity : AppCompatActivity() {
             ) {
                 if(response.isSuccessful){
                     val data = response.body()?.items
-                    Log.d("BookResponse", data.toString())
                     data?.let { setDataToAdapter(it) }
                 }
             }

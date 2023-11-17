@@ -64,6 +64,7 @@ class BookAdapter(
         Glide.with(holder.view)
             .asBitmap()
             .load(image)
+            .override(124, 160)
             .into(object : SimpleTarget<Bitmap>() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                     // Mengatur gambar ke ImageView

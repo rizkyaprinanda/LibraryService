@@ -1,11 +1,12 @@
+
 package com.example.backside.utils
 
 import android.content.Context
 import android.content.SharedPreferences
 
 class SessionManager (context: Context) {
-    var sharedPreferences : SharedPreferences? = null
-    var editor : SharedPreferences.Editor? = null
+    var sharedPreferences: SharedPreferences? = null
+    var editor: SharedPreferences.Editor? = null
 
     // variabel key
     val keyPreference = "login"
@@ -23,7 +24,7 @@ class SessionManager (context: Context) {
     }
 
     // logout
-    fun sessionLogout(){
+    fun sessionLogout() {
         editor?.remove(keyName)
         editor?.apply()
     }
@@ -33,11 +34,11 @@ class SessionManager (context: Context) {
         get() = sharedPreferences?.getString(keyName, null)
 
 
-    fun isLogin() : Boolean {
-        if (!name.isNullOrEmpty()){
+    fun isLogin(): Boolean {
+        if (!name.isNullOrEmpty()) {
             return true
         }
-            return false
+        return false
     }
 
 }

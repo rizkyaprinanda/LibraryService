@@ -42,14 +42,14 @@
             android:id="@+id/tvNama"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="8dp"
             android:background="#2B2D3D"
             android:gravity="center"
+            android:padding="4dp"
             android:text="Kode Token"
-            android:textColor="#E24055"
+            android:textColor="#E57373"
             android:textSize="10sp" />
 
         <TextView
@@ -74,18 +74,18 @@
         <Button
             android:id="@+id/btnJoin"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
+            android:layout_gravity="end"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
             android:layout_marginBottom="10dp"
             android:backgroundTint="#4E46E7"
             android:foregroundGravity="bottom"
-            android:layout_gravity="end"
-            android:textSize="12sp"
             android:text="Join"
             android:textAllCaps="false"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="12sp" />
 
     </LinearLayout>
 

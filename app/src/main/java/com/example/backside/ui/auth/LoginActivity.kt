@@ -1,17 +1,15 @@
 package com.example.backside.ui.auth
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
-import com.example.backside.BrowserActivity
+import com.example.backside.BooksActivity
 import com.example.backside.R
-import com.example.backside.utils.SessionManager
 import com.example.backside.databinding.ActivityLoginBinding
+import com.example.backside.utils.SessionManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -37,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
         val sessionManager = SessionManager(this)
 
         if (sessionManager.isLogin()){
-            val intent = Intent(this, BrowserActivity::class.java)
+            val intent = Intent(this, BooksActivity::class.java)
             startActivity(intent)
             finish()
         } else {
@@ -107,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this){
                 if(it.isSuccessful){
                     Toast.makeText(this, "Selamat datang $email", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, BrowserActivity::class.java)
+                    val intent = Intent(this, BooksActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {
@@ -140,7 +138,7 @@ class LoginActivity : AppCompatActivity() {
         sessionManager.sessionLogin(email)
         auth.signInWithCredential(credential)
             .addOnCompleteListener{
-                startActivity(Intent(this, BrowserActivity::class.java))
+                startActivity(Intent(this, BooksActivity::class.java))
                 finish()
             }
             .addOnFailureListener{error ->
