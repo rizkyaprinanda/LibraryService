@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
@@ -17,21 +18,21 @@ import com.example.backside.utils.BookItem
 
 class BookAdapter(
     private val context: Context,
-    private val dataList: ArrayList<BookItem>
+    private var dataList: List<BookItem>
 ) : RecyclerView.Adapter<BookAdapter.MyViewHolder>() {
 
     class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val tvName = view.findViewById<TextView>(R.id.tvNama)
-        val tvUsername = view.findViewById<TextView>(R.id.tvUsername)
-        val tvEmail = view.findViewById<TextView>(R.id.tvEmail)
-        val cvMain = view.findViewById<CardView>(R.id.cvMain)
-        val linearLayout = view.findViewById<LinearLayout>(R.id.content)
-        val imageView = view.findViewById<ImageView>(R.id.imageView)
+        val tvTitle = view.findViewById<TextView>(R.id.tvBookTitle)
+        val tvAuthor = view.findViewById<TextView>(R.id.tvAuthor)
+        val tvCategory = view.findViewById<TextView>(R.id.tvCategory)
+        val layoutCard = view.findViewById<LinearLayout>(R.id.layoutCard)
+        val cvImageView = view.findViewById<CardView>(R.id.cvBookImage)
+        val ivBookImage = view.findViewById<ImageView>(R.id.ivBookImage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val itemView = layoutInflater.inflate(R.layout.items_layout, parent, false)
+        val itemView = layoutInflater.inflate(R.layout.items_books, parent, false)
         return MyViewHolder(itemView)
     }
 
@@ -55,30 +56,36 @@ class BookAdapter(
             description
         }
 
-        holder.tvName.text = currentItem.volumeInfo.publisher
-        holder.tvUsername.text = titleText
-        holder.tvEmail.text = descriptionText
+        val selectedBook = dataList[position]
+
+        val volumeInfo = selectedBook.volumeInfo
+        val categories = volumeInfo.categories
+
+
+        holder.tvTitle.text = currentItem.volumeInfo.publisher
+        holder.tvAuthor.text = titleText
+        holder.tvCategory.text = currentItem.volumeInfo.categories.toString().removeSurrounding("[", "]")
 
         val image = currentItem.volumeInfo.imageLinks.thumbnail
 
         Glide.with(holder.view)
             .asBitmap()
             .load(image)
-            .centerCrop()
             .into(object : SimpleTarget<Bitmap>() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                     // Mengatur gambar ke ImageView
-                    holder.imageView.setImageBitmap(resource)
+                    holder.ivBookImage.setImageBitmap(resource)
 
                     // Mendapatkan warna dominan dari gambar
                     val dominantColor = getDominantColor(resource)
 
-                    // Mengatur latar belakang linearLayout dengan warna dominan
-                    holder.linearLayout.setBackgroundColor(dominantColor)
+                    // Mengatur latar belakang cvImageView dengan warna dominan
+                    holder.cvImageView.setBackgroundColor(dominantColor)
+
                 }
             })
 
-        holder.cvMain.setOnClickListener {
+        holder.layoutCard.setOnClickListener {
             Toast.makeText(context, currentItem.volumeInfo.title, Toast.LENGTH_SHORT).show()
         }
     }
@@ -91,8 +98,7 @@ class BookAdapter(
     override fun getItemCount(): Int = dataList.size
 
     fun setData(data: List<BookItem>) {
-        dataList.clear()
-        dataList.addAll(data.filter { it.volumeInfo?.description?.isNotBlank() == true })
+        dataList = data.filter { it.volumeInfo?.description?.isNotBlank() == true }
         notifyDataSetChanged()
     }
 }

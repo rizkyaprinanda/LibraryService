@@ -73,6 +73,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <ScrollView
+        android:id="@+id/svBooks"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
@@ -100,6 +101,19 @@
 
             </androidx.recyclerview.widget.RecyclerView>
 
+            <TextView
+                android:id="@+id/tvNoResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sorry, the book you're looking for is not available."
+                android:textSize="20sp"
+                android:padding="10dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvMain" />
+
             <Button
                 android:id="@+id/btnLogout"
                 android:layout_width="match_parent"
@@ -114,7 +128,7 @@
                 android:textAllCaps="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rvMain" />
+                app:layout_constraintTop_toBottomOf="@+id/tvNoResult" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -126,7 +140,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnLogout" />
 
+
         </LinearLayout>
+
     </ScrollView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
