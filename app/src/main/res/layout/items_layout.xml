@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cvMain"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="12dp"
     app:cardElevation="12dp"
+    android:backgroundTint="#242339"
     app:cardCornerRadius="10dp"
-    android:backgroundTint="#242339">
+    android:id="@+id/cvMain">
+
 
     <LinearLayout
         android:layout_width="155dp"
@@ -35,6 +36,7 @@
             android:layout_margin="10dp"
             android:src="@drawable/logo" />
         </LinearLayout>
+
 
         <TextView
             android:id="@+id/tvNama"
@@ -70,6 +72,7 @@
             android:textSize="10sp" />
 
         <Button
+            android:id="@+id/btnJoin"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="8dp"
@@ -87,3 +90,5 @@
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
+
+

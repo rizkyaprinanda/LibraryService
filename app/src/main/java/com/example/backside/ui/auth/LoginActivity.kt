@@ -8,8 +8,7 @@ import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
-import com.example.backside.BooksActivity
-import com.example.backside.HomeActivity
+import com.example.backside.BrowserActivity
 import com.example.backside.R
 import com.example.backside.utils.SessionManager
 import com.example.backside.databinding.ActivityLoginBinding
@@ -35,23 +34,10 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val logo = binding.logo
-
-// Mendapatkan gambar dari ImageView
-        val drawable = logo.drawable as BitmapDrawable
-        val bitmap = drawable.bitmap
-
-// Mendapatkan warna dominan dari gambar
-        val dominantColor = getDominantColor(bitmap)
-
-// Mengatur latar belakang dengan warna dominan
-        val content = binding.contents
-        content.setBackgroundColor(dominantColor)
-
         val sessionManager = SessionManager(this)
 
         if (sessionManager.isLogin()){
-            val intent = Intent(this, BooksActivity::class.java)
+            val intent = Intent(this, BrowserActivity::class.java)
             startActivity(intent)
             finish()
         } else {
@@ -115,18 +101,13 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun getDominantColor(bitmap: Bitmap?): Int {
-        // Menghitung warna dominan dari gambar
-        val newBitmap = bitmap?.let { Bitmap.createScaledBitmap(it, 1, 1, true) }
-        return newBitmap?.getPixel(0, 0) ?: 0
-    }
 
     private fun LoginFirebase(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this){
                 if(it.isSuccessful){
                     Toast.makeText(this, "Selamat datang $email", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, BooksActivity::class.java)
+                    val intent = Intent(this, BrowserActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {
@@ -159,7 +140,7 @@ class LoginActivity : AppCompatActivity() {
         sessionManager.sessionLogin(email)
         auth.signInWithCredential(credential)
             .addOnCompleteListener{
-                startActivity(Intent(this, BooksActivity::class.java))
+                startActivity(Intent(this, BrowserActivity::class.java))
                 finish()
             }
             .addOnFailureListener{error ->

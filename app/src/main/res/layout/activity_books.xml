@@ -13,6 +13,8 @@
         android:layout_margin="20dp"
         android:background="#1E1D3C"
         android:hint="Search Book..."
+        android:drawableLeft="@drawable/search"
+        android:drawablePadding="15dp"
         android:textColorHint="#BBBBC4"
         android:paddingLeft="15dp"
         android:textSize="15sp"

@@ -1,3 +1,4 @@
+
 package com.example.backside
 
 import com.google.gson.annotations.SerializedName
@@ -31,4 +32,3 @@ data class ResponseItem(
     @SerializedName("vote_count")
     val voteCount: Int,
 )
-

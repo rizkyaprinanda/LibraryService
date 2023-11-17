@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+
     signingConfigs {
         getByName("debug") {
             storeFile = file("C:\\MyKeyStore\\keystore.jks")
@@ -14,6 +15,7 @@ android {
             keyPassword = "Vivo2804"
         }
     }
+
     namespace = "com.example.backside"
     compileSdk = 34
 
@@ -53,6 +55,7 @@ android {
 
 dependencies {
 
+    implementation("com.caverock:androidsvg:1.4")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
@@ -75,6 +78,9 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics-ktx:21.5.0")
 //    Glide
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+
+//    Palette
+    implementation ("androidx.palette:palette:1.0.0")
 
     implementation("androidx.cardview:cardview:1.0.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

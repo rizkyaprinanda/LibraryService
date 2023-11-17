@@ -1,3 +1,4 @@
+
 package com.example.backside.utils
 
 import com.google.gson.annotations.SerializedName
@@ -95,3 +96,4 @@ data class BookItem(
     val accessInfo: AccessInfo,
     val searchInfo: SearchInfo
 )
+

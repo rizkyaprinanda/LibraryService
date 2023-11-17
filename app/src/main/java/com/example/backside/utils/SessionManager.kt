@@ -39,4 +39,5 @@ class SessionManager (context: Context) {
         }
             return false
     }
+
 }
