@@ -3,6 +3,7 @@ package com.example.backside.Adapters
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +14,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
+import com.example.backside.Books
 import com.example.backside.R
 import com.example.backside.utils.BookItem
 
 class BookAdapter(
     private val context: Context,
-    private var dataList: List<BookItem>
+    private var dataList: List<BookItem>,
+    private var itemClickListener: ((BookItem) -> Unit)? = null
 ) : RecyclerView.Adapter<BookAdapter.MyViewHolder>() {
 
     class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -28,65 +31,99 @@ class BookAdapter(
         val layoutCard = view.findViewById<LinearLayout>(R.id.layoutCard)
         val cvImageView = view.findViewById<CardView>(R.id.cvBookImage)
         val ivBookImage = view.findViewById<ImageView>(R.id.ivBookImage)
+        val upVote = view.findViewById<LinearLayout>(R.id.llUpvote)
+        val bookCount = view.findViewById<TextView>(R.id.tvBookCount)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val itemView = layoutInflater.inflate(R.layout.items_books, parent, false)
+        val itemView = LayoutInflater.from(context).inflate(R.layout.items_books, parent, false)
         return MyViewHolder(itemView)
     }
 
-    val MAX_DESCRIPTION_LENGTH = 150
-    val MAX_TITLE_LENGTH = 35
+    private val MAX_DESCRIPTION_LENGTH = 150
+    private val MAX_TITLE_LENGTH = 35
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentItem = dataList[position]
-
-        val description = currentItem.volumeInfo.description.orEmpty()
-
-        val titleText = if (currentItem.volumeInfo.title.length > MAX_TITLE_LENGTH) {
-            currentItem.volumeInfo.title.substring(0, MAX_TITLE_LENGTH) + "..."
-        } else {
-            currentItem.volumeInfo.title
-        }
-
-        val descriptionText = if (description.length > MAX_DESCRIPTION_LENGTH) {
-            description.substring(0, MAX_DESCRIPTION_LENGTH) + "..."
-        } else {
-            description
-        }
-
         val selectedBook = dataList[position]
-
         val volumeInfo = selectedBook.volumeInfo
         val categories = volumeInfo.categories
+        val descriptionText = if (volumeInfo.title.length > MAX_TITLE_LENGTH) {
+            volumeInfo.title.substring(0, MAX_TITLE_LENGTH) + "..."
+        } else {
+            volumeInfo.title
+        }
+
+        with(holder) {
+            tvTitle.text = descriptionText
+            tvAuthor.text = volumeInfo.publisher.orEmpty()
+            tvCategory.text = categories.toString().removeSurrounding("[", "]")
+
+            Glide.with(view)
+                .asBitmap()
+                .load(volumeInfo.imageLinks.thumbnail)
+                .into(object : SimpleTarget<Bitmap>() {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: Transition<in Bitmap>?
+                    ) {
+                        // Set the image to ImageView
+                        ivBookImage.setImageBitmap(resource)
+
+                        // Get the dominant color from the image
+                        val dominantColor = getDominantColor(resource)
+
+                        // Set the background of cvImageView with the dominant color
+                        cvImageView.setBackgroundColor(dominantColor)
+                    }
+                })
+
+            layoutCard.setOnClickListener {
+                Toast.makeText(context, volumeInfo.title, Toast.LENGTH_SHORT).show()
+            }
+
+            val upVoteBackgroundResId =
+                if (selectedBook.sudahVote) R.drawable.bgupnew else R.drawable.bgup
+            upVote.setBackgroundResource(upVoteBackgroundResId)
+
+            upVote.setOnClickListener {
+
+                if (!selectedBook.sudahVote) {
+                    selectedBook.jumlah = 0.toString()
+                    Log.d("BookAdapter", "selectedBook.jumlah before: ${selectedBook.jumlah}")
+                    if (!selectedBook.jumlah.isNullOrBlank()) {
+
+                        selectedBook.jumlah = (selectedBook.jumlah.toInt() + 1).toString()
+                        Log.d("BookAdapter", "selectedBook.jumlah after: ${selectedBook.jumlah}")
+                        holder.bookCount.text = selectedBook.jumlah
+                    }
+
+                    selectedBook.sudahVote = true
+                    val message = "Successfully upvoted the book ${volumeInfo.title}"
+                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                    upVote.setBackgroundResource(R.drawable.bgupnew)
+                } else {
+                    Log.d("BookAdapter", "selectedBook.jumlah before: ${selectedBook.jumlah}")
+                    if (!selectedBook.jumlah.isNullOrBlank()) {
+                        selectedBook.jumlah = (selectedBook.jumlah.toInt() - 1).toString()
+                        Log.d("BookAdapter", "selectedBook.jumlah after: ${selectedBook.jumlah}")
+                        holder.bookCount.text = selectedBook.jumlah
+                    }
 
 
-        holder.tvTitle.text = currentItem.volumeInfo.publisher
-        holder.tvAuthor.text = titleText
-        holder.tvCategory.text = currentItem.volumeInfo.categories.toString().removeSurrounding("[", "]")
 
-        val image = currentItem.volumeInfo.imageLinks.thumbnail
-
-        Glide.with(holder.view)
-            .asBitmap()
-            .load(image)
-            .into(object : SimpleTarget<Bitmap>() {
-                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    // Mengatur gambar ke ImageView
-                    holder.ivBookImage.setImageBitmap(resource)
-
-                    // Mendapatkan warna dominan dari gambar
-                    val dominantColor = getDominantColor(resource)
-
-                    // Mengatur latar belakang cvImageView dengan warna dominan
-                    holder.cvImageView.setBackgroundColor(dominantColor)
-
+                    selectedBook.sudahVote = false
+                    val message = "Oops, you downvoted the book ${volumeInfo.title}"
+                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                    upVote.setBackgroundResource(R.drawable.bgup)
                 }
-            })
+            }
 
-        holder.layoutCard.setOnClickListener {
-            Toast.makeText(context, currentItem.volumeInfo.title, Toast.LENGTH_SHORT).show()
+            itemView.setOnClickListener {
+                // Memastikan itemClickListener tidak null sebelum dipanggil
+                itemClickListener?.invoke(selectedBook)
+            }
+
+
         }
     }
 
@@ -98,7 +135,7 @@ class BookAdapter(
     override fun getItemCount(): Int = dataList.size
 
     fun setData(data: List<BookItem>) {
-        dataList = data.filter { it.volumeInfo?.description?.isNotBlank() == true }
+        dataList = data
         notifyDataSetChanged()
     }
 }

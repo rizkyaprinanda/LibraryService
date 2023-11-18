@@ -1,12 +1,13 @@
 package com.example.backside.ui.auth
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
+import androidx.appcompat.app.AppCompatActivity
 import com.example.backside.BooksActivity
+import com.example.backside.GettingStartedActivity
 import com.example.backside.R
 import com.example.backside.databinding.ActivityLoginBinding
 import com.example.backside.utils.SessionManager
@@ -19,130 +20,137 @@ import com.google.firebase.auth.GoogleAuthProvider
 
 class LoginActivity : AppCompatActivity() {
 
-    lateinit var binding : ActivityLoginBinding
-    lateinit var auth : FirebaseAuth
-    lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var binding: ActivityLoginBinding
+    private lateinit var auth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     companion object {
         private const val RC_SIGN_IN = 123
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        binding = ActivityLoginBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val sessionManager = SessionManager(this)
+        val preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE)
+        val isFirstTime = preferences.getBoolean("isFirstTime", true)
 
-        if (sessionManager.isLogin()){
-            val intent = Intent(this, BooksActivity::class.java)
-            startActivity(intent)
+        if (isFirstTime) {
+            startActivity(Intent(this@LoginActivity, GettingStartedActivity::class.java))
             finish()
         } else {
-            auth = FirebaseAuth.getInstance()
+            val sessionManager = SessionManager(this)
 
-            var btnGoogle = binding.cvGoogle
+            if (sessionManager.isLogin()) {
+                startActivity(Intent(this, BooksActivity::class.java))
+                finish()
+            } else {
+                initializeAuthentication()
+                setupGoogleSignIn()
 
-            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build()
-            googleSignInClient = GoogleSignIn.getClient(this, gso)
+                binding.btnlogin.setOnClickListener {
+                    val email = binding.edtEmailLogin.text.toString()
+                    val password = binding.edtPasswordLogin.text.toString()
 
+                    sessionManager.sessionLogin(email)
 
-            binding.btnlogin.setOnClickListener{
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-            }
-
-            binding.btnlogin.setOnClickListener{
-
-                val email = binding.edtEmailLogin.text.toString()
-                val password = binding.edtPasswordLogin.text.toString()
-
-                sessionManager.sessionLogin(email)
-
-                // Validasi email
-                if (email.isEmpty()){
-                    binding.edtEmailLogin.error = "Email Harus diisi"
-                    binding.edtEmailLogin.requestFocus()
-                    return@setOnClickListener
+                    if (validateCredentials(email, password)) {
+                        loginFirebase(email, password)
+                    }
                 }
 
-                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                    binding.edtEmailLogin.error = "Email Tidak Valid"
-                    binding.edtEmailLogin.requestFocus()
-                    return@setOnClickListener
+                binding.tvToRegister.setOnClickListener {
+                    startActivity(Intent(this, RegisterActivity::class.java))
                 }
 
-                // Validasi Password
-                if (password.isEmpty()){
-                    binding.edtPasswordLogin.error = "Password Harus diisi"
-                    binding.edtPasswordLogin.requestFocus()
-                    return@setOnClickListener
+                binding.cvGoogle.setOnClickListener {
+                    startGoogleSignIn()
                 }
-
-                LoginFirebase(email,password)
-
-            }
-
-            binding.tvToRegister.setOnClickListener{
-                val intent = Intent(this, RegisterActivity::class.java)
-                startActivity(intent)
-            }
-
-            btnGoogle.setOnClickListener{
-                val signInIntent  = googleSignInClient.signInIntent
-                startActivityForResult(signInIntent, RC_SIGN_IN)
             }
         }
-
     }
 
+    private fun initializeAuthentication() {
+        auth = FirebaseAuth.getInstance()
+    }
 
-    private fun LoginFirebase(email: String, password: String) {
+    private fun setupGoogleSignIn() {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+    }
+
+    private fun validateCredentials(email: String, password: String): Boolean {
+        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            binding.edtEmailLogin.error = "Email tidak valid"
+            binding.edtEmailLogin.requestFocus()
+            return false
+        }
+
+        if (password.isEmpty()) {
+            binding.edtPasswordLogin.error = "Password harus diisi"
+            binding.edtPasswordLogin.requestFocus()
+            return false
+        }
+
+        return true
+    }
+
+    private fun loginFirebase(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this){
-                if(it.isSuccessful){
-                    Toast.makeText(this, "Selamat datang $email", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, BooksActivity::class.java)
-                    startActivity(intent)
+            .addOnCompleteListener(this) {
+                if (it.isSuccessful) {
+                    showToast("Selamat datang $email")
+                    startActivity(Intent(this, BooksActivity::class.java))
                     finish()
                 } else {
-                    Toast.makeText(this, "${it.exception?.message}", Toast.LENGTH_SHORT).show()
+                    showToast("${it.exception?.message}")
                 }
             }
     }
 
-    @Deprecated("Deprecated in Java")
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, LENGTH_SHORT).show()
+    }
+
+    private fun startGoogleSignIn() {
+        val signInIntent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_SIGN_IN){
-            // Menangani proses google
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                // Jika berhasil
-                val account = task.getResult(ApiException::class.java)!!
-                firebaseAuthWithGoogle(account.idToken!!)
-            } catch (e: ApiException){
-                e.printStackTrace()
-                Toast.makeText(applicationContext, e.localizedMessage, LENGTH_SHORT).show()
-            }
+        if (requestCode == RC_SIGN_IN) {
+            handleGoogleSignInResult(data)
         }
     }
 
-    fun firebaseAuthWithGoogle(idToken: String){
+    private fun handleGoogleSignInResult(data: Intent?) {
+        try {
+            val account = GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException::class.java)!!
+            firebaseAuthWithGoogle(account.idToken!!)
+        } catch (e: ApiException) {
+            e.printStackTrace()
+            showToast(e.localizedMessage)
+        }
+    }
+
+    private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         val sessionManager = SessionManager(this)
         val email = idToken
         sessionManager.sessionLogin(email)
+
         auth.signInWithCredential(credential)
-            .addOnCompleteListener{
+            .addOnCompleteListener {
                 startActivity(Intent(this, BooksActivity::class.java))
                 finish()
             }
-            .addOnFailureListener{error ->
-                Toast.makeText(this, error.localizedMessage, LENGTH_SHORT).show()
+            .addOnFailureListener { error ->
+                showToast(error.localizedMessage)
             }
     }
 }

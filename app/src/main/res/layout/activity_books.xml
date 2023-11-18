@@ -11,7 +11,7 @@
         android:id="@+id/edtSearch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+        android:layout_margin="20dp"
         android:background="@drawable/raidiussearch"
         android:drawableLeft="@drawable/search"
         android:drawablePadding="15dp"
@@ -20,10 +20,10 @@
         android:hint="Search Book..."
         android:inputType="text"
         android:minHeight="48dp"
-        android:padding="10dp"
+        android:padding="15dp"
         android:paddingLeft="10dp"
         android:textColor="#FBF7F7"
-        android:textColorHint="#FFFFFF"
+        android:textColorHint="#BBBBC4"
         android:textSize="12sp"
         app:layout_constraintCircleRadius="10dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -39,24 +39,6 @@
         app:layout_constraintTop_toBottomOf="@+id/edtSearch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="30dp"
-            android:background="@drawable/radiusbutton"
-            android:padding="10dp"
-            android:orientation="horizontal">
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                tools:ignore="TouchTargetSizeCheck" />
-        </LinearLayout>
 
     </LinearLayout>
     <TextView
@@ -92,7 +74,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/items_layout"
+                tools:listitem="@layout/items_books"
                 android:fontFamily="@font/montserratregular"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"

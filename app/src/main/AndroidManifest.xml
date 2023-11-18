@@ -15,6 +15,27 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <!-- Aktivitas Get Started -->
+        <activity
+            android:name=".ui.auth.LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".GettingStarted2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".GettingStarted3Activity"
+            android:exported="false" />
+        <activity
+            android:name=".GettingStarted4Activity"
+            android:exported="false" />
+
+        <!-- Aktivitas Lainnya -->
         <activity
             android:name=".BrowserActivity"
             android:exported="true" />
@@ -31,17 +52,13 @@
             android:name=".ui.auth.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.auth.LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:name=".GettingStartedActivity"
+            android:exported="false" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
+        <!-- Meta-data -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
+
 </manifest>
