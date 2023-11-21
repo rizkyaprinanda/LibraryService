@@ -1,4 +1,4 @@
-package com.example.backside
+package com.example.backside.view
 
 import android.app.ProgressDialog
 import android.content.Intent
@@ -9,17 +9,17 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import com.example.backside.Adapters.BookAdapter
+import com.example.backside.adapters.BookAdapter
+import com.example.backside.R
 import com.example.backside.databinding.ActivityBooksBinding
-import com.example.backside.ui.auth.LoginActivity
 import com.example.backside.utils.ApiBookClient
 import com.example.backside.utils.BookItem
 import com.example.backside.utils.BookResponse
 import com.example.backside.utils.SessionManager
+import com.example.backside.view.auth.LoginActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions

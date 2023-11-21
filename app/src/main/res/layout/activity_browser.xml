@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BrowserActivity">
+    tools:context=".view.BrowserActivity">
 
     <EditText
         android:id="@+id/search"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/raidiussearch"
+        android:background="@drawable/radiussearch"
         android:drawableLeft="@drawable/search"
         android:drawablePadding="15dp"
         android:ems="10"

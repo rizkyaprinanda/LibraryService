@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.ProgressBar
 import com.example.backside.databinding.ActivityMainBinding
 import android.widget.Toast
-import com.example.backside.ui.auth.LoginActivity
+import com.example.backside.view.auth.LoginActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient

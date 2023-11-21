@@ -1,16 +1,22 @@
-package com.example.backside.ui.auth
+package com.example.backside.view.auth
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Patterns
+import android.view.LayoutInflater
+import android.widget.Switch
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
-import com.example.backside.BooksActivity
-import com.example.backside.GettingStartedActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.view.ContextThemeWrapper
 import com.example.backside.R
 import com.example.backside.databinding.ActivityLoginBinding
 import com.example.backside.utils.SessionManager
+import com.example.backside.view.BooksActivity
+import com.example.backside.view.GettingStartedActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -23,9 +29,13 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var preferences: SharedPreferences
 
     companion object {
         private const val RC_SIGN_IN = 123
+        private const val PREF_NAME = "MyPreferences"
+        private const val KEY_FIRST_TIME = "isFirstTime"
+        private const val KEY_DARK_MODE = "isDarkMode"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +43,11 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE)
-        val isFirstTime = preferences.getBoolean("isFirstTime", true)
+        preferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+
+        val isFirstTime = preferences.getBoolean(KEY_FIRST_TIME, true)
+
+
 
         if (isFirstTime) {
             startActivity(Intent(this@LoginActivity, GettingStartedActivity::class.java))
@@ -46,6 +59,14 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(Intent(this, BooksActivity::class.java))
                 finish()
             } else {
+                val switchButton: Switch = findViewById(R.id.switchButton)
+
+                switchButton.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    }else{
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)}
+                }
                 initializeAuthentication()
                 setupGoogleSignIn()
 
@@ -70,6 +91,9 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+
+
 
     private fun initializeAuthentication() {
         auth = FirebaseAuth.getInstance()

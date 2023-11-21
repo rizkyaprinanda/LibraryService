@@ -9,7 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.backside.R
-import com.example.backside.Books
+import com.example.backside.model.Books
 
 class BrowserAdapter(private val context: Context, private var bookList: List<Books>)
     : RecyclerView.Adapter<BrowserAdapter.BrowserViewHolder>() {

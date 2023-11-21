@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".TutorialTheme"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,32 +16,32 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
-        <!-- Aktivitas Get Started -->
         <activity
-            android:name=".ui.auth.LoginActivity"
+            android:name=".Mulai"
+            android:exported="false" />
+        <activity
+            android:name=".view.auth.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".GettingStarted2Activity"
+            android:name=".view.GettingStarted2Activity"
             android:exported="false" />
         <activity
-            android:name=".GettingStarted3Activity"
+            android:name=".view.GettingStarted3Activity"
             android:exported="false" />
         <activity
-            android:name=".GettingStarted4Activity"
+            android:name=".view.GettingStarted4Activity"
             android:exported="false" />
-
-        <!-- Aktivitas Lainnya -->
         <activity
-            android:name=".BrowserActivity"
+            android:name=".view.BrowserActivity"
             android:exported="true" />
         <activity
-            android:name=".BooksActivity"
+            android:name=".view.BooksActivity"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
@@ -49,13 +50,12 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.auth.RegisterActivity"
+            android:name=".view.auth.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".GettingStartedActivity"
+            android:name=".view.GettingStartedActivity"
             android:exported="false" />
 
-        <!-- Meta-data -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

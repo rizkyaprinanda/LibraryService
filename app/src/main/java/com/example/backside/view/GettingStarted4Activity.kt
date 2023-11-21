@@ -1,11 +1,11 @@
-package com.example.backside
+package com.example.backside.view
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import com.example.backside.databinding.ActivityGettingStarted4Binding
-import com.example.backside.ui.auth.LoginActivity
+import com.example.backside.view.auth.LoginActivity
 
 class GettingStarted4Activity : AppCompatActivity() {
 

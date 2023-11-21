@@ -1,9 +1,7 @@
-package com.example.backside
+package com.example.backside.view
 
 import BrowserAdapter
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -12,12 +10,12 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.backside.model.Books
+import com.example.backside.R
 
 class BrowserActivity : AppCompatActivity() {
     companion object{
@@ -42,42 +40,48 @@ class BrowserActivity : AppCompatActivity() {
 
 
         val book = listOf<Books>(
-            Books(R.drawable.gambar,
+            Books(
+                R.drawable.gambar,
                 "Luka Kata",
                 "Candra Malik",
                 "Romance",
                 "0",
                 false,
             ),
-            Books(R.drawable.gambar5,
+            Books(
+                R.drawable.gambar5,
                 "Cantik Itu Luka",
                 "Eka Kurniawan",
                 "Romance",
                 "1",
                 false,
             ),
-            Books(R.drawable.gambar2,
+            Books(
+                R.drawable.gambar2,
                 "Salt To The Sea",
                 "Ruta Sepetys",
                 "Fiksi Sejarah",
                 "0",
                 false,
             ),
-            Books(R.drawable.gambar4,
+            Books(
+                R.drawable.gambar4,
                 "House Of Shadows",
                 "Nicola Cornick",
                 "Fiksi Sejarah",
                 "0",
                 false
             ),
-            Books(R.drawable.gambarku,
+            Books(
+                R.drawable.gambarku,
                 "All The Light We Cannot See",
                 "Nicola Cornick",
                 "Fiksi Sejarah",
                 "0",
                 false
             ),
-            Books(R.drawable.gambarku,
+            Books(
+                R.drawable.gambarku,
                 "All The Light We Cannot See",
                 "Nicola Cornick",
                 "Aksi",

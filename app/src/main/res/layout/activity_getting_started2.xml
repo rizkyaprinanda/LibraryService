@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/start1"
-    tools:context=".GettingStarted2Activity">
+    tools:context=".view.GettingStarted2Activity">
 
     <ImageView
         android:id="@+id/logoImageView"

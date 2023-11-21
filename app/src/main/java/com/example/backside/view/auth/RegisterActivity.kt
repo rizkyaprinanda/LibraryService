@@ -1,4 +1,4 @@
-package com.example.backside.ui.auth
+package com.example.backside.view.auth
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +24,10 @@ class RegisterActivity : AppCompatActivity() {
         binding.btnRegister.setOnClickListener{
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.tvToLogin.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
         }
 
         // Pemanggilan fungsi RegisterFirebase di dalam onClickListener

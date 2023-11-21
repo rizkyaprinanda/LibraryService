@@ -1,4 +1,4 @@
-package com.example.backside
+package com.example.backside.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
