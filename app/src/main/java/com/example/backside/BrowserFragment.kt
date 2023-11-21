@@ -1,36 +1,47 @@
-package com.example.backside.view
+package com.example.backside
 
 import BrowserAdapter
-import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.backside.model.Books
-import com.example.backside.R
 
-class BrowserActivity : AppCompatActivity() {
-    companion object{
-        val INTENT_PARCELABLE = "OBJECT_INTENT"
+import android.view.LayoutInflater
+
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import com.example.backside.model.Books
+
+
+@Suppress("NAME_SHADOWING")
+class BrowserFragment : Fragment() {
+    companion object {
+        fun newInstance(): BrowserFragment {
+            return BrowserFragment()
+        }
     }
 
-    @SuppressLint("MissingInflatedId", "SuspiciousIndentation")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_browser)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_browser, container, false)
+
+        // Isi dengan logika yang ada dalam BrowserActivity
 
         val data = listOf("Semua","Romance", "Fiksi Sejarah", "Dongeng", "Aksi")
-        val spinner: Spinner = findViewById(R.id.spinner)
-        val search = findViewById<EditText>(R.id.search)
-        val adapcher = ArrayAdapter(this, R.layout.custom_spinner, data)
+        val spinner: Spinner = view.findViewById(R.id.spinner)
+        val search = view.findViewById<EditText>(R.id.search)
+        val adapcher = ArrayAdapter<String>(requireContext(), R.layout.custom_spinner, data)
+
 
         adapcher.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapcher
@@ -40,60 +51,61 @@ class BrowserActivity : AppCompatActivity() {
 
 
         val book = listOf<Books>(
-            Books(
-                R.drawable.gambar,
+            Books(R.drawable.gambar,
                 "Luka Kata",
                 "Candra Malik",
                 "Romance",
                 "0",
                 false,
+                "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
             ),
-            Books(
-                R.drawable.gambar5,
+            Books(R.drawable.gambar5,
                 "Cantik Itu Luka",
                 "Eka Kurniawan",
                 "Romance",
                 "1",
                 false,
+                "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
             ),
-            Books(
-                R.drawable.gambar2,
+            Books(R.drawable.gambar2,
                 "Salt To The Sea",
                 "Ruta Sepetys",
                 "Fiksi Sejarah",
                 "0",
                 false,
+                "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
             ),
-            Books(
-                R.drawable.gambar4,
+            Books(R.drawable.gambar4,
                 "House Of Shadows",
                 "Nicola Cornick",
                 "Fiksi Sejarah",
                 "0",
-                false
+                false,
+                "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
             ),
-            Books(
-                R.drawable.gambarku,
+            Books(R.drawable.gambarku,
                 "All The Light We Cannot See",
                 "Nicola Cornick",
                 "Fiksi Sejarah",
                 "0",
-                false
+                false,
+                "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
             ),
-            Books(
-                R.drawable.gambarku,
+            Books(R.drawable.gambarku,
                 "All The Light We Cannot See",
                 "Nicola Cornick",
                 "Aksi",
                 "0",
-                false
+                false,
+                "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
             ),
 
 
 
             )
 
-        val adapter = BrowserAdapter(this, book)
+        val adapter = BrowserAdapter(requireContext(), book) // Gunakan requireContext()
+
         search.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(charSequence: CharSequence, start: Int, count: Int, after: Int) {
                 adapter.filter(charSequence.toString())
@@ -112,7 +124,8 @@ class BrowserActivity : AppCompatActivity() {
             override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
                 // Aksi yang diambil saat item dipilih
                 val selectedItem = data[position]
-                Toast.makeText(applicationContext, "Kategori dipilih: $selectedItem", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Kategori dipilih: $selectedItem", Toast.LENGTH_SHORT).show()
+
                 // Ambil nilai dari Spinner saat dipilih
                 val selectedCategory = spinner.selectedItem.toString()
 
@@ -137,19 +150,27 @@ class BrowserActivity : AppCompatActivity() {
 
         //Aksi pencarian
 
-        // Asumsi Anda memiliki RecyclerView dengan id 'recyclerView' di layout activity_browser
-        val recyclerView: RecyclerView = findViewById(R.id.rvBrowser)
-
-        // Buat instance adapter dan berikan list buku ke dalamnya
-
-
-        // Set adapter untuk RecyclerView
+        val recyclerView: RecyclerView = view.findViewById(R.id.rvBrowser)
         recyclerView.adapter = adapter
 
-        // Set layout manager ke GridLayoutManager
-        recyclerView.layoutManager = GridLayoutManager(this, 2) // Ganti dengan jumlah kolom yang diinginkan
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        adapter.setOnItemClickListener { book ->
+            val intent = Intent(requireContext(), DetailActivity::class.java)
+            intent.putExtra("selected_book", book)
+            startActivity(intent)
+        }
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Isi dengan logika yang ada dalam BrowserActivity
+        // Referensi view menggunakan 'view'
     }
 
 
 
 }
+

@@ -7,11 +7,15 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ProgressBar
 import android.widget.Toast
+
+import com.example.backside.databinding.ActivityJoinBinding
+
 import com.example.backside.adapters.RVAdapter
-import com.example.backside.databinding.ActivityHomeBinding
+
 import com.example.backside.view.auth.LoginActivity
 import com.example.backside.model.ResponseItem
 import com.example.backside.model.ResponseModel
+
 import com.example.backside.utils.SessionManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -21,9 +25,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeActivity : AppCompatActivity() {
+class JoinActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityHomeBinding
+    private lateinit var binding: ActivityJoinBinding
     private lateinit var adapter: RVAdapter
     private lateinit var mAuth: FirebaseAuth
     companion object {
@@ -41,7 +45,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
+        binding = ActivityJoinBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         adapter = RVAdapter(this, arrayListOf())

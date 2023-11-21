@@ -2,8 +2,25 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+
+    android:layout_width="wrap_content"
+    android:layout_marginVertical="5dp"
+    android:layout_marginHorizontal="5dp"
+
+    android:layout_gravity="center_horizontal"
     android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            tools:ignore="MissingConstraints">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -15,7 +32,10 @@
             android:layout_margin="5dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+
             android:background="@drawable/bgitem"
+            android:gravity="center_vertical"
+            android:minHeight="270dp"
             android:orientation="vertical"
             android:padding="10dp">
 
@@ -42,7 +62,7 @@
                 android:fontFamily="@font/montserrat_medium"
                 android:text="Luka Kata"
                 android:textColor="#FBFBFB"
-                android:textSize="12dp"
+                android:textSize="10dp"
                 tools:ignore="TextSizeCheck" />
 
             <TextView
@@ -63,7 +83,8 @@
                 android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingVertical="5dp">
+
+                android:paddingVertical="0dp">
 
                 <FrameLayout
                     android:layout_width="0dp"
@@ -72,8 +93,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/bgcategory"
                     android:paddingHorizontal="5dp"
-                    android:paddingVertical="7dp"
-                    >
+                    android:paddingVertical="7dp">
 
                     <TextView
                         android:id="@+id/kategoribrow"
@@ -131,8 +151,9 @@
                             tools:ignore="TextSizeCheck" />
                     </LinearLayout>
                 </FrameLayout>
-
             </LinearLayout>
+            </LinearLayout>
+    </FrameLayout>
         </LinearLayout>
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

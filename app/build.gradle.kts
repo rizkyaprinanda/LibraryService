@@ -8,14 +8,14 @@ plugins {
 android {
 
 
-    signingConfigs {
-        getByName("debug") {
-            storeFile = file("C:\\MyKeyStore\\keystore.jks")
-            storePassword = "Vivo2804"
-            keyAlias = "keybacsideapp"
-            keyPassword = "Vivo2804"
-        }
-    }
+//    signingConfigs {
+//        getByName("debug") {
+//            storeFile = file("C:\\MyKeyStore\\keystore.jks")
+//            storePassword = "Vivo2804"
+//            keyAlias = "keybacsideapp"
+//            keyPassword = "Vivo2804"
+//        }
+//    }
 
 
     namespace = "com.example.backside"
