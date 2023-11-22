@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/fragment_first.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".FirstFragment"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Halaman Pertama"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <!-- Tambahkan elemen UI atau tata letak lainnya sesuai kebutuhan -->
+
+</RelativeLayout>

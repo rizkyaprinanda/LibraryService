@@ -1,7 +1,5 @@
-
 package com.example.backside.utils
 
-import com.example.backside.ApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -27,4 +25,5 @@ object ApiBookClient {
 
             return retrofit.create(ApiBookService::class.java)
         }
+
 }

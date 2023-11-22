@@ -18,8 +18,10 @@ import android.view.LayoutInflater
 
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import com.example.backside.model.Books
 
 
+@Suppress("NAME_SHADOWING")
 class BrowserFragment : Fragment() {
     companion object {
         fun newInstance(): BrowserFragment {

@@ -6,15 +6,76 @@
     </style>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--    Primary    -->
         <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryVariant">#4E46E7</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/primary_variant_dark</item>
+        <item name="colorOnPrimary">@color/on_primary_dark</item>
         <item name="android:fontFamily">@font/montserratregular</item>
-        <item name="background">@color/primary</item>
-        <item name="android:windowBackground">@color/primary</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <!--    Secondary    -->
+        <item name="colorSecondary">#14144F</item>
+        <item name="colorSecondaryVariant">@color/primary_variant_light</item>
+        <item name="colorOnSecondary">@color/on_primary_light</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme_Darkr">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
 
     <style name="Theme.Backside" parent="Base.Theme.Backside" />
+
+    <style name="myCustomButton" parent="Widget.AppCompat.Button">
+        <item name="backgroundTint">@color/primary_light</item>
+        <item name="android:textColor">@color/on_primary_light</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Warna dasar -->
+        <item name="colorPrimary">@color/primary_dark</item>
+        <item name="colorPrimaryVariant">@color/primary_variant_dark</item>
+        <item name="colorOnPrimary">@color/on_primary_dark</item>
+
+        <!-- Warna latar belakang -->
+        <item name="android:windowBackground">@color/background_dark</item>
+
+        <!-- Font -->
+        <item name="android:fontFamily">@font/montserratregular</item>
+
+        <!-- Warna status bar -->
+        <item name="android:statusBarColor">@color/primary_dark</item>
+
+        <!-- Atribut lainnya sesuai kebutuhan -->
+    </style>
+
+
+
+
+    <style name="AppTheme.Light" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Warna dasar -->
+        <item name="colorPrimary">@color/primary_light</item>
+        <item name="colorPrimaryVariant">@color/primary_variant_light</item>
+        <item name="colorOnPrimary">@color/on_primary_light</item>
+
+        <!-- Warna latar belakang -->
+        <item name="android:windowBackground">@color/background_light</item>
+
+        <!-- Font -->
+        <item name="android:fontFamily">@font/montserratregular</item>
+
+        <!-- Warna status bar -->
+        <item name="android:statusBarColor">@color/primary_light</item>
+
+        <!-- Atribut lainnya sesuai kebutuhan -->
+    </style>
+
+
 </resources>

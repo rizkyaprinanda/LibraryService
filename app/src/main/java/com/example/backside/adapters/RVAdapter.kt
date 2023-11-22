@@ -1,4 +1,4 @@
-package com.example.backside.Adapters
+package com.example.backside.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.backside.R
-import com.example.backside.ResponseItem
+import com.example.backside.model.ResponseItem
 
 class RVAdapter(
     private val context: Context,

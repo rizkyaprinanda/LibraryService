@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="wrap_content"
     android:layout_marginVertical="5dp"
     android:layout_marginHorizontal="5dp"
@@ -17,16 +18,29 @@
 
         <LinearLayout
             android:layout_width="175dp"
-
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            tools:ignore="MissingConstraints">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_margin="5dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
             android:background="@drawable/bgitem"
             android:gravity="center_vertical"
             android:minHeight="270dp"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="10dp">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/containerGambarBrowser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -37,7 +51,6 @@
                     android:id="@+id/gambarbrowser"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
                     android:src="@drawable/logo" />
             </androidx.cardview.widget.CardView>
 
@@ -90,7 +103,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/montserratregular"
 
-                        android:gravity="center_horizontal |center_vertical"
+                        android:gravity="center_horizontal|center_vertical"
                         android:text="Romance"
                         android:textColor="#EFE2E2"
                         android:textSize="8dp"
@@ -138,8 +151,9 @@
                             tools:ignore="TextSizeCheck" />
                     </LinearLayout>
                 </FrameLayout>
-
             </LinearLayout>
+            </LinearLayout>
+    </FrameLayout>
         </LinearLayout>
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

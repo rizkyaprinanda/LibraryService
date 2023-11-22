@@ -1,5 +1,5 @@
 
-package com.example.backside
+package com.example.backside.model
 
 import com.google.gson.annotations.SerializedName
 

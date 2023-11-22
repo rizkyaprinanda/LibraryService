@@ -1,7 +1,6 @@
 
 package com.example.backside.utils
 
-import com.example.backside.ResponseModel
 import retrofit2.Call
 import retrofit2.http.GET
 

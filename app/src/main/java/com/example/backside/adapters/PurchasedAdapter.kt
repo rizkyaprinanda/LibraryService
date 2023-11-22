@@ -11,7 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.backside.Books
+import com.example.backside.model.Books
 import com.example.backside.DetailActivity
 import com.example.backside.PurchasedBooks
 import com.example.backside.R

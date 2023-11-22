@@ -94,5 +94,8 @@ data class BookItem(
     val volumeInfo: VolumeInfo,
     val saleInfo: SaleInfo,
     val accessInfo: AccessInfo,
+    var sudahVote : Boolean,
+    var jumlah : String,
     val searchInfo: SearchInfo
 )
+

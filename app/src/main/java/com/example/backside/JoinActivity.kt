@@ -7,9 +7,15 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.example.backside.Adapters.RVAdapter
+
 import com.example.backside.databinding.ActivityJoinBinding
-import com.example.backside.ui.auth.LoginActivity
+
+import com.example.backside.adapters.RVAdapter
+
+import com.example.backside.view.auth.LoginActivity
+import com.example.backside.model.ResponseItem
+import com.example.backside.model.ResponseModel
+
 import com.example.backside.utils.SessionManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient

@@ -1,19 +1,25 @@
-package com.example.backside
+package com.example.backside.view
 
 import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.View
+import android.widget.EditText
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
-import com.example.backside.Adapters.BookAdapter
+import com.example.backside.adapters.BookAdapter
+import com.example.backside.R
 import com.example.backside.databinding.ActivityBooksBinding
-import com.example.backside.ui.auth.LoginActivity
 import com.example.backside.utils.ApiBookClient
 import com.example.backside.utils.BookItem
 import com.example.backside.utils.BookResponse
 import com.example.backside.utils.SessionManager
+import com.example.backside.view.auth.LoginActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -30,7 +36,7 @@ class BooksActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var progressDialog: ProgressDialog
     private lateinit var googleSignInClient : GoogleSignInClient
-
+    private lateinit var originalData: List<BookItem>
 
 
 
@@ -64,6 +70,28 @@ class BooksActivity : AppCompatActivity() {
             sessionManager.sessionLogout()
             signOutWithProgressBar()
         }
+
+        val search = findViewById<EditText>(R.id.edtSearch)
+        val noResultTextView = findViewById<TextView>(R.id.tvNoResult) // Tambahkan TextView untuk menampilkan pesan tidak ada hasil
+        noResultTextView.visibility = View.GONE // Sembunyikan TextView awalnya
+
+        search.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, start: Int, count: Int, after: Int) {
+                // Tidak perlu melakukan apa-apa di sini
+            }
+
+            override fun onTextChanged(charSequence: CharSequence, start: Int, before: Int, count: Int) {
+                val query = charSequence.toString()
+                performSearch(query, noResultTextView)
+            }
+
+            override fun afterTextChanged(editable: Editable) {
+                // Tidak perlu melakukan apa-apa di sini
+            }
+        })
+
+        // Simpan data asli untuk pencarian
+        originalData = ArrayList()
         
         
     }
@@ -77,7 +105,6 @@ class BooksActivity : AppCompatActivity() {
             ) {
                 if(response.isSuccessful){
                     val data = response.body()?.items
-                    Log.d("BookResponse", data.toString())
                     data?.let { setDataToAdapter(it) }
                 }
             }
@@ -90,6 +117,8 @@ class BooksActivity : AppCompatActivity() {
 
     fun setDataToAdapter(data: List<BookItem>){
         adapter.setData(data)
+        // Simpan data asli untuk pencarian
+        originalData = ArrayList(data)
     }
 
     fun signOutWithProgressBar() {
@@ -114,6 +143,18 @@ class BooksActivity : AppCompatActivity() {
                 // Sembunyikan ProgressDialog karena proses selesai (meskipun dengan kesalahan)
                 progressDialog.dismiss()
             }
+        }
+    }
+
+    // Tambahkan fungsi untuk melakukan pencarian
+    private fun performSearch(query: String, noResultTextView: TextView) {
+        val filteredData = originalData.filter { it.volumeInfo.title.contains(query, ignoreCase = true) }
+        if (filteredData.isEmpty()) {
+            noResultTextView.visibility = View.VISIBLE // Tampilkan TextView jika tidak ada hasil
+            adapter.setData(emptyList()) // Atur data adapter menjadi kosong
+        } else {
+            noResultTextView.visibility = View.GONE // Sembunyikan TextView jika ada hasil
+            adapter.setData(filteredData)
         }
     }
 

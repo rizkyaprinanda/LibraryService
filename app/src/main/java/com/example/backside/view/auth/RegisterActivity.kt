@@ -1,4 +1,4 @@
-package com.example.backside.ui.auth
+package com.example.backside.view.auth
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -26,27 +26,24 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.tvToLogin.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
+
         // Pemanggilan fungsi RegisterFirebase di dalam onClickListener
         binding.btnRegister.setOnClickListener {
             val email = binding.edtEmailRegister.text.toString()
             val password = binding.edtPassword.text.toString()
-            val firstName = binding.edtFirstName.text.toString()
-            val lastName = binding.edtLastName.text.toString()
+            val name = binding.edtName.text.toString()
             val confirmPassword = binding.edtConfirm.text.toString()
 
             // Validasi First Name
-            if (firstName.isEmpty()){
-                binding.edtFirstName.error = "Isi nama depan anda!"
-                binding.edtFirstName.requestFocus()
+            if (name.isEmpty()){
+                binding.edtName.error = "Isi nama depan anda!"
                 return@setOnClickListener
             }
 
-            // Validasi Last Name
-            if (lastName.isEmpty()){
-                binding.edtLastName.error = "Isi nama belakang anda!"
-                binding.edtLastName.requestFocus()
-                return@setOnClickListener
-            }
+
 
             // Validasi email
             if (email.isEmpty()){
@@ -88,19 +85,19 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            RegisterFirebase(email, password, firstName, lastName)
+            RegisterFirebase(email, password, name)
 
         }
     }
 
-    private fun RegisterFirebase(email: String, password: String, firstName: String, lastName: String) {
+    private fun RegisterFirebase(email: String, password: String, name: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Simpan data tambahan ke database atau lakukan tindakan lain yang diperlukan
                     val user = auth.currentUser
                     val userProfileChangeRequest = UserProfileChangeRequest.Builder()
-                        .setDisplayName("$firstName $lastName")
+                        .setDisplayName("$name")
                         .build()
 
                     user?.updateProfile(userProfileChangeRequest)
