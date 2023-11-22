@@ -1,5 +1,6 @@
 package com.example.backside
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -13,7 +14,7 @@ class ForgotPassword : AppCompatActivity() {
         val sendResetEmailButton: Button = findViewById(R.id.sendResetEmail)
         val backButton: ImageButton = findViewById(R.id.backButton)
 
-        sendResetEmailButton.setOnClickListener{ setContentView(R.layout.activity_email_sent) }
+        sendResetEmailButton.setOnClickListener{ startActivity(Intent(this@ForgotPassword, EmailSent::class.java)) }
         backButton.setOnClickListener{ finish() }
     }
 }

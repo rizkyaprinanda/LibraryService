@@ -11,12 +11,15 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="Library Service"
+        android:label="Upbooks"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".view.HomeBeforeJoin"
+            android:exported="false" />
         <activity
             android:name=".ResetPassword"
             android:exported="false" />
@@ -43,11 +46,27 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" /> <!-- <activity -->
-        <!-- android:name=".ui.auth.RegisterActivity" -->
-        <!-- android:exported="false" /> -->
+            android:exported="true" />
         <activity
-            android:name=".ui.auth.LoginActivity"
+            android:name=".view.BooksActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.GettingStartedActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.GettingStarted2Activity"
+            android:exported="true" />
+        <activity
+            android:name=".view.GettingStarted3Activity"
+            android:exported="true" />
+        <activity
+            android:name=".view.GettingStarted4Activity"
+            android:exported="true" />
+        <activity
+            android:name=".view.auth.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.auth.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
     tools:context=".MainMenuActivity">
 
     <androidx.fragment.app.FragmentContainerView
@@ -20,5 +21,6 @@
         android:layout_alignParentBottom="true"
         android:background="#FFFFFF"
         app:labelVisibilityMode="labeled"
+        app:itemTextColor="?attr/colorOnSecondary"
         app:menu="@menu/bottom_navigation_bar" />
 </RelativeLayout>

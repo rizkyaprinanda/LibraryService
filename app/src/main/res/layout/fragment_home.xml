@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
+    android:background="?attr/colorPrimary"
     tools:context=".HomeFragment">
 
 
@@ -23,7 +22,7 @@
                 android:id="@+id/search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/raidiussearch"
+                android:background="@drawable/radiussearch"
                 android:drawableLeft="@drawable/search"
                 android:drawablePadding="15dp"
                 android:ems="10"
@@ -31,22 +30,18 @@
                 android:hint="Search Book..."
                 android:inputType="text"
                 android:minHeight="48dp"
-                android:padding="10dp"
+                android:padding="15dp"
                 android:paddingLeft="10dp"
-                android:textColor="#FBF7F7"
-                android:textColorHint="#FFFFFF"
+                android:textColor="?android:attr/textColor"
+                android:textColorHint="#BBBBC4"
                 android:textSize="12sp"
-
-                tools:ignore="Autofill,MissingConstraints,RtlHardcoded"
-                tools:layout_editor_absoluteX="30dp" />
+                tools:ignore="MissingConstraints" />
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:background="#FFFFFF"
-                android:backgroundTint="#FFFFFF"
                 android:padding="20dp">
 
                 <TextView

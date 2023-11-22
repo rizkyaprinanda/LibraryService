@@ -12,10 +12,11 @@ import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.view.ContextThemeWrapper
+import com.example.backside.ForgotPassword
+import com.example.backside.MainMenuActivity
 import com.example.backside.R
 import com.example.backside.databinding.ActivityLoginBinding
 import com.example.backside.utils.SessionManager
-import com.example.backside.view.BooksActivity
 import com.example.backside.view.GettingStartedActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -56,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
             val sessionManager = SessionManager(this)
 
             if (sessionManager.isLogin()) {
-                startActivity(Intent(this, BooksActivity::class.java))
+                startActivity(Intent(this, MainMenuActivity::class.java))
                 finish()
             } else {
                 val switchButton: Switch = findViewById(R.id.switchButton)
@@ -83,6 +84,10 @@ class LoginActivity : AppCompatActivity() {
 
                 binding.tvToRegister.setOnClickListener {
                     startActivity(Intent(this, RegisterActivity::class.java))
+                }
+
+                binding.tvToForgot.setOnClickListener {
+                    startActivity(Intent(this, ForgotPassword::class.java))
                 }
 
                 binding.cvGoogle.setOnClickListener {
@@ -128,7 +133,7 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) {
                 if (it.isSuccessful) {
                     showToast("Selamat datang $email")
-                    startActivity(Intent(this, BooksActivity::class.java))
+                    startActivity(Intent(this, MainMenuActivity::class.java))
                     finish()
                 } else {
                     showToast("${it.exception?.message}")
@@ -170,7 +175,7 @@ class LoginActivity : AppCompatActivity() {
 
         auth.signInWithCredential(credential)
             .addOnCompleteListener {
-                startActivity(Intent(this, BooksActivity::class.java))
+                startActivity(Intent(this, MainMenuActivity::class.java))
                 finish()
             }
             .addOnFailureListener { error ->

@@ -1,19 +1,25 @@
 package com.example.backside
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageButton
+import androidx.appcompat.app.AppCompatActivity
+import com.example.backside.databinding.ActivityEmailSentBinding
+import com.example.backside.view.auth.LoginActivity
 
 class EmailSent : AppCompatActivity() {
+    private lateinit var binding: ActivityEmailSentBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_email_sent)
+        binding = ActivityEmailSentBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val doneButton: Button = findViewById(R.id.doneButton)
-        val backButton: ImageButton = findViewById(R.id.backButton)
+        binding.doneButton.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
 
-        doneButton.setOnClickListener { setContentView(R.layout.activity_reset_password) }
-        backButton.setOnClickListener{ finish() }
+        binding.backButton.setOnClickListener {
+            finish()
+        }
     }
 }

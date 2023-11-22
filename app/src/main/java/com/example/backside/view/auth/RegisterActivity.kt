@@ -39,48 +39,47 @@ class RegisterActivity : AppCompatActivity() {
 
             // Validasi First Name
             if (name.isEmpty()){
-                binding.edtName.error = "Isi nama depan anda!"
+                binding.edtName.error = "Please enter your name!"
+                binding.edtName.requestFocus()
                 return@setOnClickListener
             }
 
-
-
             // Validasi email
             if (email.isEmpty()){
-                binding.edtEmailRegister.error = "Email Harus diisi"
+                binding.edtEmailRegister.error = "Email must be filled in!"
                 binding.edtEmailRegister.requestFocus()
                 return@setOnClickListener
             }
 
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                binding.edtEmailRegister.error = "Email Tidak Valid"
+                binding.edtEmailRegister.error = "Invalid Email"
                 binding.edtEmailRegister.requestFocus()
                 return@setOnClickListener
             }
 
             // Validasi Password
             if (password.isEmpty()){
-                binding.edtPassword.error = "Password Harus diisi"
+                binding.edtPassword.error = "Password must be filled in"
                 binding.edtPassword.requestFocus()
                 return@setOnClickListener
             }
 
             // Validasi panjang password
             if(password.length < 6){
-                binding.edtPassword.error = "Password Minimal 6 Karakter"
+                binding.edtPassword.error = "Password Minimum 6 Characters"
                 binding.edtPassword.requestFocus()
                 return@setOnClickListener
             }
 
             // Validasi Konfirmasi Password
             if (confirmPassword.isEmpty()){
-                binding.edtConfirm.error = "Harap konfirmasi password"
+                binding.edtConfirm.error = "Please confirm the password"
                 binding.edtConfirm.requestFocus()
                 return@setOnClickListener
             }
 
             if (confirmPassword != password) {
-                binding.edtConfirm.error = "Password tidak sesuai"
+                binding.edtConfirm.error = "Passwords do not match"
                 binding.edtConfirm.requestFocus()
                 return@setOnClickListener
             }

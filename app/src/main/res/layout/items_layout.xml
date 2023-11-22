@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="12dp"
     app:cardElevation="12dp"
-    android:backgroundTint="#242339"
+    android:background="?attr/colorPrimary"
     app:cardCornerRadius="10dp"
     android:id="@+id/cvMain">
 
@@ -58,7 +58,7 @@
             android:layout_height="50dp"
             android:layout_margin="8dp"
             android:text="Nama Instansi"
-            android:textColor="@color/white"
+            android:textColor="?android:attr/textColor"
             android:textStyle="bold" />
 
         <TextView
@@ -68,7 +68,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:text="Deskrispi Instasi"
-            android:textColor="@color/white"
+            android:textColor="?android:attr/textColor"
             android:textSize="10sp" />
 
         <Button
@@ -84,7 +84,7 @@
             android:foregroundGravity="bottom"
             android:text="Join"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="?android:attr/textColor"
             android:textSize="12sp" />
 
     </LinearLayout>

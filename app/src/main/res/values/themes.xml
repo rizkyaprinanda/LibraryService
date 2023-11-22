@@ -16,7 +16,7 @@
         <!--    Secondary    -->
         <item name="colorSecondary">#14144F</item>
         <item name="colorSecondaryVariant">@color/primary_variant_light</item>
-        <item name="colorOnSecondary">@color/on_primary_light</item>
+        <item name="colorOnSecondary">@color/gray</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
     </style>
 

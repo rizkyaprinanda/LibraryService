@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="12dp"
     app:cardElevation="12dp"
+    android:background="?attr/colorPrimary"
     android:backgroundTint="#242339"
     app:cardCornerRadius="10dp"
     android:id="@+id/cvMain">
@@ -54,7 +55,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:layout_marginBottom="5dp"
                 android:text="Luka Kata"
-                android:textColor="@color/white"
+                android:textColor="?android:attr/textColor"
                 android:textStyle="bold"/>
 
             <TextView
@@ -62,7 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:text="Chandra Malik"
-                android:textColor="@color/white"
+                android:textColor="?android:attr/textColor"
                 android:textSize="10sp"  />
 
             <LinearLayout
