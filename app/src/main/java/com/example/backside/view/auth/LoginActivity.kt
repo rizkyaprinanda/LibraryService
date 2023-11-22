@@ -5,19 +5,17 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Patterns
-import android.view.LayoutInflater
 import android.widget.Switch
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.view.ContextThemeWrapper
 import com.example.backside.ForgotPassword
-import com.example.backside.MainMenuActivity
 import com.example.backside.R
 import com.example.backside.databinding.ActivityLoginBinding
 import com.example.backside.utils.SessionManager
 import com.example.backside.view.GettingStartedActivity
+import com.example.backside.view.HomeBeforeJoinActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -48,8 +46,6 @@ class LoginActivity : AppCompatActivity() {
 
         val isFirstTime = preferences.getBoolean(KEY_FIRST_TIME, true)
 
-
-
         if (isFirstTime) {
             startActivity(Intent(this@LoginActivity, GettingStartedActivity::class.java))
             finish()
@@ -57,16 +53,17 @@ class LoginActivity : AppCompatActivity() {
             val sessionManager = SessionManager(this)
 
             if (sessionManager.isLogin()) {
-                startActivity(Intent(this, MainMenuActivity::class.java))
+                startActivity(Intent(this, HomeBeforeJoinActivity::class.java))
                 finish()
             } else {
                 val switchButton: Switch = findViewById(R.id.switchButton)
 
-                switchButton.setOnCheckedChangeListener { buttonView, isChecked ->
+                switchButton.setOnCheckedChangeListener { _, isChecked ->
                     if (isChecked) {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    }else{
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)}
+                    } else {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    }
                 }
                 initializeAuthentication()
                 setupGoogleSignIn()
@@ -97,9 +94,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-
-
-
     private fun initializeAuthentication() {
         auth = FirebaseAuth.getInstance()
     }
@@ -114,13 +108,13 @@ class LoginActivity : AppCompatActivity() {
 
     private fun validateCredentials(email: String, password: String): Boolean {
         if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.edtEmailLogin.error = "Email tidak valid"
+            binding.edtEmailLogin.error = "Invalid Email"
             binding.edtEmailLogin.requestFocus()
             return false
         }
 
         if (password.isEmpty()) {
-            binding.edtPasswordLogin.error = "Password harus diisi"
+            binding.edtPasswordLogin.error = "Password must be filled in"
             binding.edtPasswordLogin.requestFocus()
             return false
         }
@@ -132,8 +126,8 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) {
                 if (it.isSuccessful) {
-                    showToast("Selamat datang $email")
-                    startActivity(Intent(this, MainMenuActivity::class.java))
+                    showToast("Welcome $email to Upbooks")
+                    startActivity(Intent(this, HomeBeforeJoinActivity::class.java))
                     finish()
                 } else {
                     showToast("${it.exception?.message}")
@@ -159,7 +153,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun handleGoogleSignInResult(data: Intent?) {
         try {
-            val account = GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException::class.java)!!
+            val account =
+                GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException::class.java)!!
             firebaseAuthWithGoogle(account.idToken!!)
         } catch (e: ApiException) {
             e.printStackTrace()
@@ -175,7 +170,7 @@ class LoginActivity : AppCompatActivity() {
 
         auth.signInWithCredential(credential)
             .addOnCompleteListener {
-                startActivity(Intent(this, MainMenuActivity::class.java))
+                startActivity(Intent(this, HomeBeforeJoinActivity::class.java))
                 finish()
             }
             .addOnFailureListener { error ->

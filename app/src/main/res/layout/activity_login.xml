@@ -50,7 +50,7 @@
                 android:text="Email"
                 android:layout_marginTop="10dp"
                 android:layout_margin="20dp"
-                android:textSize="20dp"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvdesc" />
@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:text="Password"
-                android:textSize="20dp"
+                android:textSize="14sp"
                 android:textColor="?android:attr/textColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -121,7 +121,7 @@
                 android:textStyle="bold"
                 android:paddingLeft="10dp"
                 android:textColorHint="#69687D"
-                android:textColor="?attr/android:textColor"
+                android:textColor="?android:attr/textColor"
                 android:background="@drawable/radiusedittext"
                 android:inputType="textPassword"
                 android:layout_marginTop="10dp"
@@ -142,6 +142,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
                 android:text="Forgot Password"
+                android:textSize="14sp"
                 android:fontFamily="@font/montserrat_bold"
                 android:textColor="?android:attr/textColor"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -162,7 +163,7 @@
                 android:textColor="@color/white"
                 android:text="Login"
                 android:textAllCaps="false"
-                android:textSize="20dp"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvToForgot"/>
@@ -174,8 +175,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="40dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
             app:layout_constraintBottom_toBottomOf="@id/containerLogin"
             app:layout_constraintStart_toStartOf="@id/containerLogin"
             app:layout_constraintTop_toBottomOf="@+id/tvToRegister">
@@ -205,7 +205,7 @@
                         android:text="Login dengan akun Google"
                         android:textAlignment="center"
                         android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <ImageView
                         android:layout_width="25sp"
@@ -250,6 +250,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
                 android:text="Don't have any account?"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnlogin" />
@@ -266,6 +267,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:textColor="?android:attr/textColor"
                 android:text="Register"
+                android:textSize="14sp"
                 android:textAlignment="viewEnd"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

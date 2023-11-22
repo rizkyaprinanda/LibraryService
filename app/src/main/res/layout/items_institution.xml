@@ -13,7 +13,6 @@
     <LinearLayout
         android:layout_width="155dp"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
         android:background="#242339"
         android:orientation="vertical"
         android:layout_weight="1">
@@ -25,9 +24,9 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imgInstitution"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="136dp"
                 android:layout_gravity="center"
                 android:elevation="6dp"
                 android:outlineProvider="bounds"
@@ -38,21 +37,22 @@
 
 
         <TextView
-            android:id="@+id/tvUsername"
+            android:id="@+id/tvInstName"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="8dp"
-            android:text="Nama Instansi"
+            android:text="Institution Name"
+            android:textSize="16sp"
             android:textColor="?android:attr/textColor"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvEmail"
+            android:id="@+id/tvInstDesc"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="50dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:text="Deskrispi Instasi"
+            android:text="Institution description"
             android:textColor="?android:attr/textColor"
             android:textSize="10sp" />
 
