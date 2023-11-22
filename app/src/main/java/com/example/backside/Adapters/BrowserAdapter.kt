@@ -57,6 +57,10 @@ class BrowserAdapter(private val context: Context, private var bookList: List<Bo
         notifyDataSetChanged()
     }
 
+    fun setOnItemClickListener(listener: (Books) -> Unit) {
+        itemClickListener = listener
+    }
+   
     inner class BrowserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val imgbrow = view.findViewById<ImageView>(R.id.gambarbrowser)
         private val judul = view.findViewById<TextView>(R.id.judulbrow)
@@ -74,6 +78,7 @@ class BrowserAdapter(private val context: Context, private var bookList: List<Bo
             penulis.text = book.penulis
             kategori.text = book.kategori
             jumlah.text = book.jumlah
+
 
             if(book.sudahVote == false){
                 mantepLayout.setBackgroundResource(R.drawable.bgup)
@@ -100,15 +105,13 @@ class BrowserAdapter(private val context: Context, private var bookList: List<Bo
                     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                     mantepLayout.setBackgroundResource(R.drawable.bgup)
                 }
-
-
-
+                itemView.setOnClickListener {
+                    itemClickListener?.invoke(book)
+                }
 
 
             }
-            itemView.setOnClickListener {
-                itemClickListener?.invoke(book)
-            }
+
         }
     }
 }
