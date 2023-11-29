@@ -11,6 +11,7 @@ import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.backside.ForgotPassword
+import com.example.backside.MainMenuActivity
 import com.example.backside.R
 import com.example.backside.databinding.ActivityLoginBinding
 import com.example.backside.utils.SessionManager
@@ -35,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
         private const val PREF_NAME = "MyPreferences"
         private const val KEY_FIRST_TIME = "isFirstTime"
         private const val KEY_DARK_MODE = "isDarkMode"
+        private const val KEY_JOINED = "isJoined"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +47,7 @@ class LoginActivity : AppCompatActivity() {
         preferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
         val isFirstTime = preferences.getBoolean(KEY_FIRST_TIME, true)
+        val isJoined = preferences.getBoolean(KEY_JOINED, false)  // Tambahkan ini
 
         if (isFirstTime) {
             startActivity(Intent(this@LoginActivity, GettingStartedActivity::class.java))
@@ -52,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
         } else {
             val sessionManager = SessionManager(this)
 
-            if (sessionManager.isLogin()) {
+            if (sessionManager.isLogin() || isJoined) {
                 startActivity(Intent(this, HomeBeforeJoinActivity::class.java))
                 finish()
             } else {
@@ -72,7 +75,6 @@ class LoginActivity : AppCompatActivity() {
                     val email = binding.edtEmailLogin.text.toString()
                     val password = binding.edtPasswordLogin.text.toString()
 
-                    sessionManager.sessionLogin(email)
 
                     if (validateCredentials(email, password)) {
                         loginFirebase(email, password)
@@ -127,7 +129,11 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) {
                 if (it.isSuccessful) {
                     showToast("Welcome $email to Upbooks")
-                    startActivity(Intent(this, HomeBeforeJoinActivity::class.java))
+
+                    // Tandai pengguna sudah join dan simpan ke SharedPreferences
+                    preferences.edit().putBoolean(KEY_JOINED, true).apply()
+
+                    startActivity(Intent(this, MainMenuActivity::class.java))
                     finish()
                 } else {
                     showToast("${it.exception?.message}")

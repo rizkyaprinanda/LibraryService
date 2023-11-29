@@ -65,7 +65,7 @@ class PurchasedFragment : Fragment() {
                 "50",
                 false,
                 false,
-                "dfjsklasdjfklasdjl;fjasdl;jfsddkljasf;dljfasdkl;jf4fdkljfdlaskfelhahdfhasdjkfh4uhaksjdhfkajsdhflkj4hkljashdfjklahlkh34u8ytrytrfahsdkfhadksjfhasdjklfhlasdhfkladh"
+                "Sebuah kisah fiksi sejarah yang menggali rumah berhantu dengan lapisan misteri di setiap sudutnya. Melalui penulisan Nicola Cornick, pembaca akan diajak untuk meresapi atmosfir zaman dulu dan menyelidiki rahasia yang tersembunyi dalam bayang-bayang rumah tersebut."
             ),
             PurchasedBooks(R.drawable.gambar2,
                 "Salt To The Sea",
@@ -74,7 +74,7 @@ class PurchasedFragment : Fragment() {
                 "5",
                 true,
                 true,
-                "dfjsklasdjfklasdjl;fjasdl;jfsddkljasf;dljfasdkl;jf4fdkljfdlaskfelhahdfhasdjkfh4uhaksjdhfkajsdhflkj4hkljashdfjklahlkh34u8ytrytrfahsdkfhadksjfhasdjklfhlasdhfkladh"
+                "Sebuah perjalanan epik melintasi laut pada masa Perang Dunia II. Ruta Sepetys membawa pembaca ke dalam kehidupan empat orang yang terjebak dalam kisah dramatis kapal karam Wilhelm Gustloff. Pengalaman pahit dan getir perang terungkap melalui mata para karakter yang berusaha bertahan hidup."
             ),
             PurchasedBooks(R.drawable.gambar,
                 "Luka Kata",
@@ -83,7 +83,7 @@ class PurchasedFragment : Fragment() {
                 "0",
                 false,
                 false,
-                "dfjsklasdjfklasdjl;fjasdl;jfsddkljasf;dljfasdkl;jf4fdkljfdlaskfelhahdfhasdjkfh4uhaksjdhfkajsdhflkj4hkljashdfjklahlkh34u8ytrytrfahsdkfhadksjfhasdjklfhlasdhfkladh"
+                "Kisah romantis yang mengisahkan perjalanan dua hati yang saling terluka. Candra Malik dengan indah menyampaikan konflik emosional dan keindahan cinta melalui kata-kata yang menyentuh. Novel ini mengajak pembaca untuk menjelajahi dunia perasaan yang dalam dan penuh makna."
             ),
             PurchasedBooks(R.drawable.gambar5,
                 "Cantik Itu Luka",
@@ -92,7 +92,7 @@ class PurchasedFragment : Fragment() {
                 "10",
                 true,
                 true,
-                "dfjsklasdjfklasdjl;fjasdl;jfsddkljasf;dljfasdkl;jf4fdkljfdlaskfelhahdfhasdjkfh4uhaksjdhfkajsdhflkj4hkljashdfjklahlkh34u8ytrytrfahsdkfhadksjfhasdjklfhlasdhfkladh"
+                "Eka Kurniawan menghadirkan kisah penuh warna tentang kecantikan dan luka di sepanjang perjalanan hidup seorang wanita. Dengan sentuhan magis dalam bahasa penceritaannya, novel ini mengeksplorasi kompleksitas hubungan dan keindahan yang muncul dari setiap lukisan kata."
             )
 
 

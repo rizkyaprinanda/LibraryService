@@ -54,7 +54,7 @@
             android:name=".view.BooksActivity"
             android:exported="true" />
         <activity
-            android:name=".view.GettingStartedActivity"
+            android:name=".view.auth.LoginActivity"
             android:exported="true" />
         <activity
             android:name=".view.GettingStarted2Activity"
@@ -69,7 +69,7 @@
             android:name=".view.auth.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".view.auth.LoginActivity"
+            android:name=".view.GettingStartedActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -11,19 +11,14 @@
         android:id="@+id/rvVoteProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-
         android:layout_gravity="center_horizontal"
-
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginRight="10dp"
         android:foregroundGravity="center_horizontal"
-
-
         android:pointerIcon="cell"
-        app:spanCount="4"
-
+        app:spanCount="2"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         android:nestedScrollingEnabled="true"
         tools:listitem="@layout/items_browser" />
 </FrameLayout>

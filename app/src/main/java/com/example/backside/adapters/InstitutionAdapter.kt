@@ -1,6 +1,7 @@
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.example.backside.MainMenuActivity
 import com.example.backside.R
 import com.example.backside.model.Books
 import com.example.backside.model.Institutions
+import com.example.backside.view.HomeBeforeJoinActivity
 import com.example.backside.view.RequestTokenActivity
 
 class InstitutionsAdapter(private val context: Context, private var institutionsList: List<Institutions>)
@@ -22,6 +24,14 @@ class InstitutionsAdapter(private val context: Context, private var institutions
 
     private var originalInstitutionsList: List<Institutions> = institutionsList.toList()
     private var itemClickListener: ((Institutions) -> Unit)? = null
+    private lateinit var preferences: SharedPreferences
+
+    companion object {
+        private const val RC_SIGN_IN = 123
+        private const val PREF_NAME = "MyPreferences"
+        private const val KEY_FIRST_TIME = "isFirstTime"
+        private const val KEY_DARK_MODE = "isDarkMode"
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InstitutionViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.items_institution, parent, false)
@@ -76,10 +86,6 @@ class InstitutionsAdapter(private val context: Context, private var institutions
                 val intent = Intent(itemView.context, RequestTokenActivity::class.java)
                 itemView.context.startActivity(intent)
             }
-
-
-
-
         }
     }
 

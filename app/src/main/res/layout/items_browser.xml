@@ -5,19 +5,16 @@
     android:background="?attr/colorPrimary"
     android:layout_width="wrap_content"
     android:layout_marginVertical="5dp"
-    android:layout_marginHorizontal="5dp"
-
     android:layout_gravity="center_horizontal"
     android:layout_height="wrap_content">
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-
         tools:ignore="MissingConstraints">
 
         <LinearLayout
-            android:layout_width="175dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             tools:ignore="MissingConstraints">

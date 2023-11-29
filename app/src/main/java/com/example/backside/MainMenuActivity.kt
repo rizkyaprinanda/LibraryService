@@ -1,9 +1,14 @@
 package com.example.backside
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.example.backside.utils.SessionManager
+import com.example.backside.view.HomeBeforeJoinActivity
+import com.example.backside.view.auth.LoginActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 @Suppress("DEPRECATION")
@@ -42,6 +47,19 @@ class MainMenuActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Tambahkan inisialisasi status join dari SharedPreferences
+        val preferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+        val isJoined = preferences.getBoolean("isJoined", true)
+
+        val sessionManager = SessionManager(this)
+        if (!sessionManager.isLogin() && !isJoined) {
+            // Pengguna tidak login dan tidak bergabung, kembali ke LoginActivity
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+
+
         setContentView(R.layout.activity_main_menu)
 
         val navView: BottomNavigationView = findViewById(R.id.bottom_navigation)
