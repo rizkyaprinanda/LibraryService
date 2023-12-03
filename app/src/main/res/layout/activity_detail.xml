@@ -110,14 +110,30 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp">
 
-            <TextView
-                android:id="@+id/deskripsi"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/montserratregular"
-                android:text="kocak"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp" />
+                android:padding="30dp"
+                app:cardBackgroundColor="#1C1C65"
+                app:cardCornerRadius="5dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/deskripsi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserratregular"
+                        android:text="kocak"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp" />
+                </FrameLayout>
+
+            </androidx.cardview.widget.CardView>
         </ScrollView>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -82,7 +82,7 @@
             android:layout_marginBottom="10dp"
             android:backgroundTint="#4E46E7"
             android:foregroundGravity="bottom"
-            android:text="Join"
+            android:text="Load More"
             android:textAllCaps="false"
             android:textColor="?android:attr/textColor"
             android:textSize="12sp" />
