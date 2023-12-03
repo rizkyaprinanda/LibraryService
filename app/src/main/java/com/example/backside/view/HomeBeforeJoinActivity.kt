@@ -4,6 +4,7 @@ import InstitutionsAdapter
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,12 +20,18 @@ import com.example.backside.MainMenuActivity
 import com.example.backside.R
 import com.example.backside.databinding.ActivityHomeBeforeJoinBinding
 import com.example.backside.model.Institutions
+import com.example.backside.utils.ApiInstitutionClient
 import com.example.backside.utils.SessionManager
 import com.example.backside.view.auth.LoginActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import kotlin.math.log
 
 class HomeBeforeJoinActivity : AppCompatActivity() {
 
@@ -35,12 +42,40 @@ class HomeBeforeJoinActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var progressDialog: ProgressDialog
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var preferences: SharedPreferences
+
+    companion object {
+        private const val RC_SIGN_IN = 123
+        private const val PREF_NAME = "MyPreferences"
+        private const val KEY_FIRST_TIME = "isFirstTime"
+        private const val KEY_DARK_MODE = "isDarkMode"
+        private const val KEY_JOINED = "isJoined"
+        private const val KEY_LOGIN = "isLogin"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Tambahkan inisialisasi status join dari SharedPreferences
+        preferences = getSharedPreferences(HomeBeforeJoinActivity.PREF_NAME, Context.MODE_PRIVATE)
+        val sessionManager = SessionManager(this)
+        val isLogin = preferences.getBoolean(HomeBeforeJoinActivity.KEY_LOGIN, false)
+
+        preferences.edit().putBoolean(KEY_JOINED, false).apply()
+        preferences.edit().putBoolean(KEY_LOGIN, true).apply()
+
+        if (!isLogin) {
+            // Pengguna tidak login dan tidak bergabung, kembali ke LoginActivity
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+
+
+        FirebaseApp.initializeApp(this)
         binding = ActivityHomeBeforeJoinBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Inisialisasi UI dan komponen lainnya
         val recyclerView: RecyclerView = findViewById(R.id.rvinstitution)
         val search: EditText = findViewById(R.id.edtSearch)
         noResultTextView = findViewById(R.id.tvNoResult)
@@ -51,21 +86,8 @@ class HomeBeforeJoinActivity : AppCompatActivity() {
         // Inisialisasi progressDialog
         progressDialog = ProgressDialog(this)
 
-        // Contoh data institusi
-        val institutionList: List<Institutions> = listOf(
-            Institutions("1", R.drawable.itb1, "Universitas A", "Bandung", "Perpustakaan Umum Kampus A", "access_token_1"),
-            Institutions("2", R.drawable.ipb1, "Universitas B", "Bogor", "Perpustakaan Umum Kampus B", "access_token_2"),
-            Institutions("3", R.drawable.sma1a, "SMA 1 A", "Jakarta", "Perpustakaan Umum SMA A", "access_token_3"),
-            Institutions("4", R.drawable.sma1b, "SMA 1 B", "Jakarta", "Perpustakaan Umum SMA B", "access_token_4"),
-            Institutions("5", R.drawable.itb1, "Universitas A", "Bandung", "Perpustakaan Umum Kampus A", "access_token_1"),
-            Institutions("6", R.drawable.ipb1, "Universitas B", "Bogor", "Perpustakaan Umum Kampus B", "access_token_2"),
-            Institutions("7", R.drawable.sma1a, "SMA 1 A", "Jakarta", "Perpustakaan Umum SMA A", "access_token_3"),
-            Institutions("8", R.drawable.sma1b, "SMA 1 B", "Jakarta", "Perpustakaan Umum SMA B", "access_token_4"),
-            // Tambahkan data institusi lainnya sesuai kebutuhan
-        )
-
-        originalData = institutionList
-        institutionsAdapter = InstitutionsAdapter(this, institutionList)
+        originalData = ArrayList()
+        institutionsAdapter = InstitutionsAdapter(this, arrayListOf())
 
         recyclerView.layoutManager = GridLayoutManager(this, 2)
         recyclerView.adapter = institutionsAdapter
@@ -85,34 +107,19 @@ class HomeBeforeJoinActivity : AppCompatActivity() {
             }
         })
 
-        val sessionManager = SessionManager(this)
-
-
-
-        // Tambahkan inisialisasi status join dari SharedPreferences
-        val preferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
-        val isJoined = preferences.getBoolean("isJoined", false)
-
-        if (isJoined == true) {
-            // Jika pengguna belum bergabung, arahkan ke HomeBeforeJoinActivity atau LoginActivity
-            startActivity(Intent(this, MainMenuActivity::class.java))
-            finish()
-            return
-        }
-
-
         // Inisialisasi GoogleSignInOptions
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id)) // Ganti dengan Web Client ID Anda
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
+
         // Inisialisasi googleSignInClient
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         binding.btnLogout.setOnClickListener {
             val user = mAuth.currentUser
             if (user != null) {
-                // Pengguna sedang login, lakukan logout
+                preferences.edit().putBoolean(KEY_LOGIN, false).apply()
                 sessionManager.sessionLogout()
                 signOutWithProgressBar()
             } else {
@@ -120,22 +127,22 @@ class HomeBeforeJoinActivity : AppCompatActivity() {
                 Toast.makeText(this, "Anda tidak sedang login", Toast.LENGTH_SHORT).show()
             }
         }
+
+        // Call the method to fetch institutions
+        remoteGetInstitutions()
     }
 
     private fun signOutWithProgressBar() {
         progressDialog.show()
 
-        // Pastikan bahwa googleSignInClient sudah diinisialisasi dengan benar sebelum digunakan
-        // googleSignInClient.signOut() akan menghapus token Google Sign-In
         googleSignInClient.signOut().addOnCompleteListener { googleSignOutTask ->
             if (googleSignOutTask.isSuccessful) {
-                // Sign out dari Google berhasil, lanjut dengan sign-out dari FirebaseAuth
                 mAuth.signOut()
+                preferences.edit().putBoolean(KEY_LOGIN, false).apply()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {
-                // Gagal melakukan sign out dari Google, tangani sesuai kebutuhan
                 Toast.makeText(this, "Gagal sign out", Toast.LENGTH_SHORT).show()
                 progressDialog.dismiss()
             }
@@ -146,28 +153,43 @@ class HomeBeforeJoinActivity : AppCompatActivity() {
         val trimmedQuery = query.trim()
         Log.d("PerformSearch", "Performing search with query: $query")
 
-        // ... (Tambahkan log untuk originalData dan filteredData)
-
-
-
         val filteredData = originalData.filter {
             it.name.contains(trimmedQuery, ignoreCase = true) ||
                     it.description.contains(trimmedQuery, ignoreCase = true)
         }
 
+        if (filteredData.isEmpty()) {
+            noResultTextView.visibility = View.VISIBLE
+            institutionsAdapter.setData(emptyList())
+            binding.rvinstitution.visibility = View.GONE
+            noResultTextView.text = "Sorry, the institution you are looking for does not exist."
+        } else {
+            noResultTextView.visibility = View.GONE
+            binding.rvinstitution.visibility = View.VISIBLE
+            institutionsAdapter.setData(filteredData)
+        }
+    }
 
-            if (filteredData.isEmpty()) {
-                noResultTextView.visibility = View.VISIBLE
-                institutionsAdapter.setData(emptyList())
-                binding.rvinstitution.visibility = View.GONE
-                noResultTextView.text = "Sorry, the institution you are looking for does not exist."
-            } else {
-                noResultTextView.visibility = View.GONE
-                binding.rvinstitution.visibility = View.VISIBLE
-                institutionsAdapter.setData(filteredData)
+    fun setDataToAdapter(data: List<Institutions>) {
+        institutionsAdapter.setData(data)
+        originalData = ArrayList(data)
+    }
+
+    private fun remoteGetInstitutions() {
+        ApiInstitutionClient.apiInstitutionService.getInstitutions().enqueue(object : Callback<List<Institutions>> {
+            override fun onResponse(
+                call: Call<List<Institutions>>,
+                response: Response<List<Institutions>>
+            ) {
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let { setDataToAdapter(it) }
+                }
             }
 
-
-
+            override fun onFailure(call: Call<List<Institutions>>, t: Throwable) {
+                Log.d("Error", t.stackTraceToString())
+            }
+        })
     }
 }

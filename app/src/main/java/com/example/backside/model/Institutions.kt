@@ -1,15 +1,13 @@
 package com.example.backside.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import com.google.gson.annotations.SerializedName
 
-
-@Parcelize
-data class Institutions (
-    val id: String,
-    val imgInstitution: Int,
-    val name: String,
-    val location: String,
-    val description: String,
-    val accessToken: String,
-) : Parcelable
+data class Institutions(
+    @SerializedName("accessToken") val accessToken: String,
+    @SerializedName("description") val description: String,
+    @SerializedName("id") val id: String,
+    @SerializedName("imgInstitution") val imgInstitution: String,
+    @SerializedName("location") val location: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("uuid") val uuid: String
+)

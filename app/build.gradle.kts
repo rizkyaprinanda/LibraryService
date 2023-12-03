@@ -81,10 +81,11 @@ dependencies {
     implementation ("com.squareup.picasso:picasso:2.8")
 //    Dependencies Firebase
     implementation("com.google.firebase:firebase-auth:22.2.0")
-    implementation("com.google.firebase:firebase-bom:32.5.0")
-    implementation("com.google.firebase:firebase-analytics-ktx:21.5.0")
+    implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
+    implementation("com.google.firebase:firebase-storage")
 //    Glide
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
 
 //    Palette
     implementation ("androidx.palette:palette:1.0.0")

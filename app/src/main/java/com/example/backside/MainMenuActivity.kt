@@ -3,6 +3,7 @@ package com.example.backside
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,6 +14,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 @Suppress("DEPRECATION")
 class MainMenuActivity : AppCompatActivity() {
+    private lateinit var preferences: SharedPreferences
+    companion object {
+        private const val RC_SIGN_IN = 123
+        private const val PREF_NAME = "MyPreferences"
+        private const val KEY_FIRST_TIME = "isFirstTime"
+        private const val KEY_DARK_MODE = "isDarkMode"
+        private const val KEY_JOINED = "isJoined"
+        private const val KEY_LOGIN = "isLogin"
+
+    }
     private val onNavigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -49,8 +60,10 @@ class MainMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Tambahkan inisialisasi status join dari SharedPreferences
-        val preferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+        preferences = getSharedPreferences(MainMenuActivity.PREF_NAME, Context.MODE_PRIVATE)
         val isJoined = preferences.getBoolean("isJoined", true)
+        preferences.edit().putBoolean(MainMenuActivity.KEY_JOINED, true).apply()
+        preferences.edit().putBoolean(MainMenuActivity.KEY_LOGIN, true).apply()
 
         val sessionManager = SessionManager(this)
         if (!sessionManager.isLogin() && !isJoined) {

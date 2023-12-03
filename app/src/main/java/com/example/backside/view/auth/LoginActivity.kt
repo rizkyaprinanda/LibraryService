@@ -10,6 +10,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.backside.EditProfileActivity
 import com.example.backside.ForgotPassword
 import com.example.backside.MainMenuActivity
 import com.example.backside.R
@@ -37,6 +38,8 @@ class LoginActivity : AppCompatActivity() {
         private const val KEY_FIRST_TIME = "isFirstTime"
         private const val KEY_DARK_MODE = "isDarkMode"
         private const val KEY_JOINED = "isJoined"
+        private const val KEY_LOGIN = "isLogin"
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,27 +50,33 @@ class LoginActivity : AppCompatActivity() {
         preferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
         val isFirstTime = preferences.getBoolean(KEY_FIRST_TIME, true)
-        val isJoined = preferences.getBoolean(KEY_JOINED, false)  // Tambahkan ini
+        val isJoined = preferences.getBoolean(KEY_JOINED, false)
+        val isLogin = preferences.getBoolean(KEY_LOGIN, false)
 
+
+
+        // Set status dark mode berdasarkan nilai yang tersimpan
+        val isDarkModeEnabled = preferences.getBoolean(KEY_DARK_MODE, false)
+        if (isDarkModeEnabled) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        }
         if (isFirstTime) {
-            startActivity(Intent(this@LoginActivity, GettingStartedActivity::class.java))
+            startActivity(Intent(this, GettingStartedActivity::class.java))
             finish()
         } else {
-            val sessionManager = SessionManager(this)
 
-            if (sessionManager.isLogin() || isJoined) {
+            if (isLogin && isJoined) {
+                startActivity(Intent(this, MainMenuActivity::class.java))
+                finish()
+            } else if (isLogin && !isJoined) {
                 startActivity(Intent(this, HomeBeforeJoinActivity::class.java))
                 finish()
             } else {
-                val switchButton: Switch = findViewById(R.id.switchButton)
 
-                switchButton.setOnCheckedChangeListener { _, isChecked ->
-                    if (isChecked) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    } else {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    }
-                }
+
                 initializeAuthentication()
                 setupGoogleSignIn()
 
@@ -100,6 +109,8 @@ class LoginActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
     }
 
+
+
     private fun setupGoogleSignIn() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -130,11 +141,16 @@ class LoginActivity : AppCompatActivity() {
                 if (it.isSuccessful) {
                     showToast("Welcome $email to Upbooks")
 
-                    // Tandai pengguna sudah join dan simpan ke SharedPreferences
-                    preferences.edit().putBoolean(KEY_JOINED, true).apply()
+                    val isJoined = preferences.getBoolean(KEY_JOINED, false)
 
-                    startActivity(Intent(this, MainMenuActivity::class.java))
-                    finish()
+                    if (isJoined) {
+                        startActivity(Intent(this, MainMenuActivity::class.java))
+                        finish()
+                    } else if (!isJoined) {
+                        startActivity(Intent(this, HomeBeforeJoinActivity::class.java))
+                        finish()
+                    }
+
                 } else {
                     showToast("${it.exception?.message}")
                 }
