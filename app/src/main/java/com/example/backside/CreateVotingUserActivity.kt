@@ -32,7 +32,7 @@ class CreateVotingUserActivity : AppCompatActivity() {
         }
         val data = listOf("Semua", "Romance", "Fiksi Sejarah", "Dongeng", "Aksi")
         val spinner: Spinner = findViewById(R.id.kategorispinner)
-        val adapter = ArrayAdapter(this, R.layout.custom_spinner2, data)
+        val adapter = ArrayAdapter(this, R.layout.custom_spinner, data)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
 

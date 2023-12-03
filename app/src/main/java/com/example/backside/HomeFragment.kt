@@ -1,6 +1,7 @@
 package com.example.backside
 
 import BrowserAdapter
+import HomeRekomendasiAdapter
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -88,7 +89,7 @@ class HomeFragment : Fragment() {
 
             )
 
-        val adapter = BrowserAdapter(requireContext(), book) // Gunakan requireContext()
+        val adapter = HomeRekomendasiAdapter(requireContext(), book) // Gunakan requireContext()
 
 
 
@@ -100,6 +101,7 @@ class HomeFragment : Fragment() {
         val recyclerView2: RecyclerView = view.findViewById(R.id.recycler2)
         recyclerView2.adapter = adapter
         recyclerView2.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
+
 
         return view
     }

@@ -54,9 +54,11 @@
                 android:id="@+id/spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:theme="@style/AppTheme"
 
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
+                android:backgroundTint="#FFFFFF"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <!--            <ImageView-->
@@ -78,10 +80,11 @@
                 android:id="@+id/rvPurchase"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:layout_marginTop="10dp"
                 android:layout_marginHorizontal="20dp"
                 android:backgroundTint="#FFFDFD"
-
+                app:spanCount="2"
                 android:focusable="auto"
                 android:foregroundTint="#FFFBFB"
                 android:pointerIcon="cell"

@@ -1,0 +1,13 @@
+<resources>
+    <style name="SpinnerItemStyle" parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:textColor">@color/black</item>
+        <!-- Properti lain yang ingin Anda ubah -->
+    </style>
+
+    <style name="SpinnerDropDownItemStyle" parent="@android:style/Widget.DropDownItem.Spinner">
+        <item name="android:textColor">@color/black</item>
+        <!-- Properti lain yang ingin Anda ubah -->
+    </style>
+
+    <!-- Gaya lainnya -->
+</resources>

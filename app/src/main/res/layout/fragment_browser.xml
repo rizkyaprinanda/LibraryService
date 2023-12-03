@@ -51,11 +51,12 @@
 
             <Spinner
                 android:id="@+id/spinner"
+                android:theme="@style/AppTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                style="@style/SpinnerTextStyle"
+                android:backgroundTint="#FFFFFF"
                 tools:ignore="TouchTargetSizeCheck" />
 
 
@@ -77,6 +78,7 @@
                 android:focusable="auto"
                 android:foregroundTint="#FFFBFB"
                 android:pointerIcon="cell"
+                app:spanCount="2"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 tools:listitem="@layout/items_browser" />
 
