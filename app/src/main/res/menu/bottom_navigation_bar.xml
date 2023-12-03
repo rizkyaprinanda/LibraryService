@@ -3,23 +3,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/itemHome"
-        android:icon="@drawable/home"
+        android:icon="@drawable/baseline_home_24"
         android:title="Home"
         android:titleTextColor="?attr/colorOnSecondary"/>
     <item
         android:id="@+id/itemBrowser"
-        android:icon="@drawable/browser"
+        android:icon="@drawable/baseline_branding_watermark_24"
         android:title="Browser"
         android:titleTextColor="?attr/colorOnSecondary"
         android:visible="true" />
     <item
         android:id="@+id/itemBuat"
-        android:icon="@drawable/purchased"
+        android:icon="@drawable/baseline_bookmark_added_24"
         android:title="Purchased"
         android:titleTextColor="?attr/colorOnSecondary"/>
     <item
         android:id="@+id/itemProfile"
-        android:icon="@drawable/profile"
+        android:icon="@drawable/baseline_person_24"
         android:title="Profile"
         android:titleTextColor="?attr/colorOnSecondary"/>
 </menu>

@@ -13,6 +13,8 @@
         <item name="android:fontFamily">@font/montserratregular</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textColorHint">@color/white</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemStyle</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemStyle</item>
         <!--    Secondary    -->
         <item name="colorSecondary">#14144F</item>
         <item name="colorSecondaryVariant">@color/primary_variant_light</item>

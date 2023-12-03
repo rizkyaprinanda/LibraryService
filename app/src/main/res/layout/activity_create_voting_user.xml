@@ -163,8 +163,9 @@
                 android:id="@+id/flSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bginput"
                 android:layout_marginTop="5dp"
+                android:background="@drawable/bginput"
+                android:backgroundTint="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView8">
@@ -173,14 +174,17 @@
                     android:id="@+id/kategorispinner"
                     android:layout_width="match_parent"
                     android:layout_height="36dp"
+                    android:backgroundTint="#FFFFFF"
                     android:minHeight="48dp"
                     android:paddingHorizontal="10dp"
                     android:paddingTop="7dp"
                     android:paddingBottom="7dp"
+                    android:pointerIcon="arrow"
                     android:textColor="#FFFFFF"
-                    android:textColorHint="#686868"
 
-                    android:pointerIcon="arrow" />
+
+                    android:textColorHint="#686868"
+                    tools:ignore="TouchTargetSizeCheck" />
             </FrameLayout>
 
             <TextView

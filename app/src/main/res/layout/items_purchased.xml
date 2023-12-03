@@ -1,25 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_marginVertical="5dp"
-    android:layout_gravity="center_horizontal"
-    android:background="?attr/colorPrimary"
-    android:layout_height="wrap_content">
-
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        tools:ignore="MissingConstraints">
-
-        <LinearLayout
-            android:layout_width="150dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:background="@drawable/bgitem"
             android:orientation="vertical"
-            android:layout_margin="5dp"
             android:padding="20dp">
 
             <androidx.cardview.widget.CardView
@@ -40,13 +27,13 @@
             <LinearLayout
                 android:id="@+id/framepurchase"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/bgcategory"
                 android:gravity="center_vertical"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:padding="5dp">
 
                 <FrameLayout
@@ -64,7 +51,7 @@
                         android:gravity="center_vertical"
                         android:text="Not Purchased"
                         android:textColor="#FFFFFF"
-                        android:textSize="12sp" />
+                        android:textSize="10sp" />
                 </FrameLayout>
 
                 <FrameLayout
@@ -76,13 +63,13 @@
                         android:id="@+id/jumlah"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="clip_vertical|center_vertical|end"
+                        android:layout_gravity="end"
                         android:layout_weight="1"
                         android:fontFamily="@font/montserratregular"
-                        android:gravity="center_vertical"
+                        android:gravity="center_vertical|end"
                         android:text="30 Vote"
                         android:textColor="#FFFFFF"
-                        android:textSize="12sp" />
+                        android:textSize="10sp" />
                 </FrameLayout>
             </LinearLayout>
 
@@ -119,8 +106,7 @@
                 android:text="Load More"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                tools:ignore="TouchTargetSizeCheck" />
 
         </LinearLayout>
-    </FrameLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>

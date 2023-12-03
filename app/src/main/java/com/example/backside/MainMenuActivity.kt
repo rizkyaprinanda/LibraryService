@@ -66,7 +66,7 @@ class MainMenuActivity : AppCompatActivity() {
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
         // Tampilkan Fragment Home saat pertama kali activity dibuka
-        val fragment = HomeFragment.newInstance()
+        val fragment = PurchasedFragment.newInstance()
         openFragment(fragment)
     }
 
