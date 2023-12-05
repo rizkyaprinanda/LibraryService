@@ -106,6 +106,34 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
 
+        <TextView
+            android:id="@+id/tvNomorInduk"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            android:text="NIS/NIPM"
+            android:textColor="?android:attr/textColor"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtEmailRegister" />
+
+        <EditText
+            android:id="@+id/edtNomorInduk"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/radiusedittext"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="?android:attr/textColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvNomorInduk" />
 
         <TextView
             android:id="@+id/tvPassword"
@@ -119,7 +147,7 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edtEmailRegister" />
+            app:layout_constraintTop_toBottomOf="@+id/edtNomorInduk" />
 
         <EditText
             android:id="@+id/edtPassword"
@@ -219,7 +247,6 @@
             app:layout_constraintBottom_toBottomOf="@id/containerRegister"
             app:layout_constraintStart_toStartOf="@id/textView"
             app:layout_constraintTop_toBottomOf="@+id/btnRegister"/>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
