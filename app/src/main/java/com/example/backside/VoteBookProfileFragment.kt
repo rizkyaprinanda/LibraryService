@@ -18,9 +18,7 @@ class VoteBookProfileFragment : Fragment() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+
 
 
         override fun onCreateView(
@@ -30,74 +28,71 @@ class VoteBookProfileFragment : Fragment() {
             // Inflate the layout for this fragment
             val view = inflater.inflate(R.layout.fragment_vote_book_profile, container, false)
 
-            val book = listOf<Books>(
-                Books(R.drawable.gambar,
+            val book = listOf(
+                Books(
+                    R.drawable.gambar,
                     "Luka Kata",
                     "Candra Malik",
                     "Romance",
-                    "1",
-                    true,
-                    "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
-                ),
-                Books(R.drawable.gambar5,
+                    "0",
+                    false,
+                    "Sebuah kisah cinta yang penuh dengan kata-kata indah dan menyentuh hati. Di dalamnya, Candra Malik menggambarkan lika-liku percintaan antara dua karakter utama yang penuh dengan konflik dan kebahagiaan.",
+                    7.2
+                ), Books(
+                    R.drawable.gambar,
+                    "Luka Kata",
+                    "Candra Malik",
+                    "Romance",
+                    "0",
+                    false,
+                    "Kisah cinta yang melibatkan pertarungan batin dan perjuangan untuk mencari arti sejati dari kata-kata. Sebuah perjalanan emosional yang memikat pembaca hingga halaman terakhir.",
+                    7.2
+                ), Books(
+                    R.drawable.gambar5,
                     "Cantik Itu Luka",
                     "Eka Kurniawan",
                     "Romance",
                     "1",
-                    true,
-                    "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
-                ),
-                Books(R.drawable.gambar2,
+                    false,
+                    "Sebuah novel epik yang mengeksplorasi kecantikan dan penderitaan. Eka Kurniawan berhasil menciptakan dunia yang penuh warna dengan karakter-karakter yang tak terlupakan.",
+                    8.5
+                ), Books(
+                    R.drawable.gambar2,
                     "Salt To The Sea",
                     "Ruta Sepetys",
                     "Fiksi Sejarah",
                     "0",
-                    true,
-                    "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
-                ),
-                Books(R.drawable.gambar4,
+                    false,
+                    "Sebuah kisah tragis tentang perjalanan melintasi lautan selama Perang Dunia II. Ruta Sepetys dengan cemerlang menuliskan pengalaman para karakter dengan penuh empati.",
+                    9.0
+                ), Books(
+                    R.drawable.gambar4,
                     "House Of Shadows",
                     "Nicola Cornick",
                     "Fiksi Sejarah",
                     "0",
-                    true,
-                    "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
-                ),
-                Books(R.drawable.gambarku,
+                    false,
+                    "Rumah berhantu yang menyimpan misteri sepanjang masa. Nicola Cornick mengajak pembaca untuk menelusuri setiap sudut rumah tersebut dalam perjalanan yang penuh teka-teki.",
+                    8.2
+                ), Books(
+                    R.drawable.gambarku,
                     "All The Light We Cannot See",
-                    "Nicola Cornick",
+                    "Anthony Doerr",
                     "Fiksi Sejarah",
                     "0",
-                    true,
-                    "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
-                ),
-                Books(R.drawable.gambarku,
+                    false,
+                    "Sebuah kisah indah tentang kehidupan selama Perang Dunia II. Anthony Doerr berhasil menangkap esensi keajaiban di tengah kegelapan.",
+                    9.5
+                ), Books(
+                    R.drawable.gambarku,
                     "All The Light We Cannot See",
-                    "Nicola Cornick",
+                    "Anthony Doerr",
                     "Aksi",
                     "0",
-                    true,
-                    "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
+                    false,
+                    "Sebuah cerita aksi yang memacu adrenalin. Anthony Doerr menggabungkan elemen-elemen thriller dengan nuansa sejarah yang mendalam.",
+                    8.0
                 ),
-                Books(R.drawable.gambarku,
-                    "All The Light We Cannot See",
-                    "Nicola Cornick",
-                    "Fiksi Sejarah",
-                    "0",
-                    true,
-                    "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
-                ),
-                Books(R.drawable.gambarku,
-                    "All The Light We Cannot See",
-                    "Nicola Cornick",
-                    "Aksi",
-                    "0",
-                    true,
-                    "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
-                ),
-
-
-
                 )
 
             val adapter = BrowserAdapter(requireContext(), book) // Gunakan requireContext()

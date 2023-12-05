@@ -40,7 +40,7 @@ class BrowserFragment : Fragment() {
         val data = listOf("Semua","Romance", "Fiksi Sejarah", "Dongeng", "Aksi")
         val spinner: Spinner = view.findViewById(R.id.spinner)
         val search = view.findViewById<EditText>(R.id.search)
-        val adapcher = ArrayAdapter<String>(requireContext(), R.layout.custom_spinner, data)
+        val adapcher = ArrayAdapter(requireContext(), R.layout.custom_spinner, data)
 
 
         adapcher.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -50,58 +50,71 @@ class BrowserFragment : Fragment() {
 
 
 
-        val book = listOf<Books>(
-            Books(R.drawable.gambar,
+        val book = listOf(
+            Books(
+                R.drawable.gambar,
                 "Luka Kata",
                 "Candra Malik",
                 "Romance",
                 "0",
                 false,
-                "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
-            ),
-            Books(R.drawable.gambar5,
+                "Sebuah kisah cinta yang penuh dengan kata-kata indah dan menyentuh hati. Di dalamnya, Candra Malik menggambarkan lika-liku percintaan antara dua karakter utama yang penuh dengan konflik dan kebahagiaan.",
+                7.2
+            ), Books(
+                R.drawable.gambar,
+                "Luka Kata",
+                "Candra Malik",
+                "Romance",
+                "0",
+                false,
+                "Kisah cinta yang melibatkan pertarungan batin dan perjuangan untuk mencari arti sejati dari kata-kata. Sebuah perjalanan emosional yang memikat pembaca hingga halaman terakhir.",
+                7.2
+            ), Books(
+                R.drawable.gambar5,
                 "Cantik Itu Luka",
                 "Eka Kurniawan",
                 "Romance",
                 "1",
                 false,
-                "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
-            ),
-            Books(R.drawable.gambar2,
+                "Sebuah novel epik yang mengeksplorasi kecantikan dan penderitaan. Eka Kurniawan berhasil menciptakan dunia yang penuh warna dengan karakter-karakter yang tak terlupakan.",
+                8.5
+            ), Books(
+                R.drawable.gambar2,
                 "Salt To The Sea",
                 "Ruta Sepetys",
                 "Fiksi Sejarah",
                 "0",
                 false,
-                "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
-            ),
-            Books(R.drawable.gambar4,
+                "Sebuah kisah tragis tentang perjalanan melintasi lautan selama Perang Dunia II. Ruta Sepetys dengan cemerlang menuliskan pengalaman para karakter dengan penuh empati.",
+                9.0
+            ), Books(
+                R.drawable.gambar4,
                 "House Of Shadows",
                 "Nicola Cornick",
                 "Fiksi Sejarah",
                 "0",
                 false,
-                "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
-            ),
-            Books(R.drawable.gambarku,
+                "Rumah berhantu yang menyimpan misteri sepanjang masa. Nicola Cornick mengajak pembaca untuk menelusuri setiap sudut rumah tersebut dalam perjalanan yang penuh teka-teki.",
+                8.2
+            ), Books(
+                R.drawable.gambarku,
                 "All The Light We Cannot See",
-                "Nicola Cornick",
+                "Anthony Doerr",
                 "Fiksi Sejarah",
                 "0",
                 false,
-                "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
-            ),
-            Books(R.drawable.gambarku,
+                "Sebuah kisah indah tentang kehidupan selama Perang Dunia II. Anthony Doerr berhasil menangkap esensi keajaiban di tengah kegelapan.",
+                9.5
+            ), Books(
+                R.drawable.gambarku,
                 "All The Light We Cannot See",
-                "Nicola Cornick",
+                "Anthony Doerr",
                 "Aksi",
                 "0",
                 false,
-                "sdfhasdkhfasdhfkhasdjkfhasdjkhfkdshfkjahsdfjkhasdjkhfkehkuckdrfdfasdfmadfdsjfklasdjlfjasdlkfjsdfjklsdjfklsdjklfjsdklfjsdklfjkldfjeukycsdjkfhjekreuhkshdfjkhdjf"
-            ),
-
-
-
+                "Sebuah cerita aksi yang memacu adrenalin. Anthony Doerr menggabungkan elemen-elemen thriller dengan nuansa sejarah yang mendalam.",
+                8.0
+            )
             )
 
         val adapter = BrowserAdapter(requireContext(), book) // Gunakan requireContext()
@@ -127,10 +140,9 @@ class BrowserFragment : Fragment() {
                 Toast.makeText(requireContext(), "Kategori dipilih: $selectedItem", Toast.LENGTH_SHORT).show()
 
                 // Ambil nilai dari Spinner saat dipilih
-                val selectedCategory = spinner.selectedItem.toString()
 
 // Filter data sesuai dengan nilai Spinner
-                val filteredData = when (selectedCategory) {
+                val filteredData = when (spinner.selectedItem.toString()) {
                     "Romance" -> book.filter { it.kategori == "Romance" }
                     "Fiksi Sejarah" -> book.filter { it.kategori == "Fiksi Sejarah" }
                     "Aksi" -> book.filter { it.kategori == "Aksi" }
@@ -162,15 +174,6 @@ class BrowserFragment : Fragment() {
 
         return view
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        // Isi dengan logika yang ada dalam BrowserActivity
-        // Referensi view menggunakan 'view'
-    }
-
-
 
 }
 

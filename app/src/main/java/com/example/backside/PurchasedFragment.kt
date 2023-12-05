@@ -1,8 +1,7 @@
 package com.example.backside
 
-import PurchasedAdapter
+import com.example.backside.adapters.PurchasedAdapter
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.FrameLayout
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,10 +25,6 @@ class PurchasedFragment : Fragment() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -45,7 +39,7 @@ class PurchasedFragment : Fragment() {
         val data = listOf("Semua","Romance", "Fiksi Sejarah", "Dongeng", "Aksi")
         val spinner: Spinner = view.findViewById(R.id.spinner)
         val search = view.findViewById<EditText>(R.id.search)
-        val adapcher = ArrayAdapter<String>(requireContext(), R.layout.custom_spinner, data)
+        val adapcher = ArrayAdapter(requireContext(), R.layout.custom_spinner, data)
 
 
 
@@ -56,43 +50,50 @@ class PurchasedFragment : Fragment() {
 
 
 
-        val book = listOf<PurchasedBooks>(
+        val book = listOf(
             PurchasedBooks(
-                R.drawable.gambar4,
-                "House Of Shadows",
-                "Nicola Cornick",
-                "Fiksi Sejarah",
-                "50",
-                false,
-                false,
-                "Sebuah kisah fiksi sejarah yang menggali rumah berhantu dengan lapisan misteri di setiap sudutnya. Melalui penulisan Nicola Cornick, pembaca akan diajak untuk meresapi atmosfir zaman dulu dan menyelidiki rahasia yang tersembunyi dalam bayang-bayang rumah tersebut."
+                imgBook = R.drawable.gambar4,
+                judul = "House Of Shadows",
+                penulis = "Nicola Cornick",
+                kategori = "Fiksi Sejarah",
+                jumlah = "50",
+                sudahVote = false,
+                sudahTerbeli = false,
+                deskripsi = "Sebuah kisah fiksi sejarah yang menggali rumah berhantu dengan lapisan misteri di setiap sudutnya. Melalui penulisan Nicola Cornick, pembaca akan diajak untuk meresapi atmosfir zaman dulu dan menyelidiki rahasia yang tersembunyi dalam bayang-bayang rumah tersebut.",
+                rating = 7.0
             ),
-            PurchasedBooks(R.drawable.gambar2,
-                "Salt To The Sea",
-                "Ruta Sepetys",
-                "Fiksi Sejarah",
-                "5",
-                true,
-                true,
-                "Sebuah perjalanan epik melintasi laut pada masa Perang Dunia II. Ruta Sepetys membawa pembaca ke dalam kehidupan empat orang yang terjebak dalam kisah dramatis kapal karam Wilhelm Gustloff. Pengalaman pahit dan getir perang terungkap melalui mata para karakter yang berusaha bertahan hidup."
+            PurchasedBooks(
+                imgBook = R.drawable.gambar2,
+                judul = "Salt To The Sea",
+                penulis = "Ruta Sepetys",
+                kategori = "Fiksi Sejarah",
+                jumlah = "5",
+                sudahVote = true,
+                sudahTerbeli = true,
+                deskripsi = "Sebuah perjalanan epik melintasi laut pada masa Perang Dunia II. Ruta Sepetys membawa pembaca ke dalam kehidupan empat orang yang terjebak dalam kisah dramatis kapal karam Wilhelm Gustloff. Pengalaman pahit dan getir perang terungkap melalui mata para karakter yang berusaha bertahan hidup.",
+                rating = 8.1
             ),
-            PurchasedBooks(R.drawable.gambar,
-                "Luka Kata",
-                "Candra Malik",
-                "Romance",
-                "0",
-                false,
-                false,
-                "Kisah romantis yang mengisahkan perjalanan dua hati yang saling terluka. Candra Malik dengan indah menyampaikan konflik emosional dan keindahan cinta melalui kata-kata yang menyentuh. Novel ini mengajak pembaca untuk menjelajahi dunia perasaan yang dalam dan penuh makna."
+            PurchasedBooks(
+                imgBook = R.drawable.gambar,
+                judul = "Luka Kata",
+                penulis = "Candra Malik",
+                kategori = "Romance",
+                jumlah = "0",
+                sudahVote = false,
+                sudahTerbeli = false,
+                deskripsi = "Kisah romantis yang mengisahkan perjalanan dua hati yang saling terluka. Candra Malik dengan indah menyampaikan konflik emosional dan keindahan cinta melalui kata-kata yang menyentuh. Novel ini mengajak pembaca untuk menjelajahi dunia perasaan yang dalam dan penuh makna.",
+                rating = 7.5
             ),
-            PurchasedBooks(R.drawable.gambar5,
-                "Cantik Itu Luka",
-                "Eka Kurniawan",
-                "Romance",
-                "10",
-                true,
-                true,
-                "Eka Kurniawan menghadirkan kisah penuh warna tentang kecantikan dan luka di sepanjang perjalanan hidup seorang wanita. Dengan sentuhan magis dalam bahasa penceritaannya, novel ini mengeksplorasi kompleksitas hubungan dan keindahan yang muncul dari setiap lukisan kata."
+            PurchasedBooks(
+                imgBook = R.drawable.gambar5,
+                judul = "Cantik Itu Luka",
+                penulis = "Eka Kurniawan",
+                kategori = "Romance",
+                jumlah = "10",
+                sudahVote = true,
+                sudahTerbeli = true,
+                deskripsi = "Eka Kurniawan menghadirkan kisah penuh warna tentang kecantikan dan luka di sepanjang perjalanan hidup seorang wanita. Dengan sentuhan magis dalam bahasa penceritaannya, novel ini mengeksplorasi kompleksitas hubungan dan keindahan yang muncul dari setiap lukisan kata.",
+                rating = 8.3
             )
 
 
@@ -121,10 +122,9 @@ class PurchasedFragment : Fragment() {
                 Toast.makeText(requireContext(), "Kategori dipilih: $selectedItem", Toast.LENGTH_SHORT).show()
 
                 // Ambil nilai dari Spinner saat dipilih
-                val selectedCategory = spinner.selectedItem.toString()
 
 // Filter data sesuai dengan nilai Spinner
-                val filteredData = when (selectedCategory) {
+                val filteredData = when (spinner.selectedItem.toString()) {
                     "Romance" -> book.filter { it.kategori == "Romance" }
                     "Fiksi Sejarah" -> book.filter { it.kategori == "Fiksi Sejarah" }
                     "Aksi" -> book.filter { it.kategori == "Aksi" }
@@ -153,11 +153,4 @@ class PurchasedFragment : Fragment() {
         return view
     }
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        // Isi dengan logika yang ada dalam BrowserActivity
-        // Referensi view menggunakan 'view'
-    }
 }
