@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorPrimary"
-    tools:context=".DetailActivity">
+    tools:context=".DetailBookActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -70,7 +70,6 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 android:orientation="horizontal"
-
                 android:textAlignment="center">
 
                 <ImageView
@@ -100,6 +99,7 @@
                     android:text="3"
                     android:textColor="#FFFFFF" />
             </LinearLayout>
+
 
         </FrameLayout>
 

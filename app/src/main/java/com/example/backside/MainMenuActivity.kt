@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.backside.utils.SessionManager
-import com.example.backside.view.HomeBeforeJoinActivity
 import com.example.backside.view.auth.LoginActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -16,10 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainMenuActivity : AppCompatActivity() {
     private lateinit var preferences: SharedPreferences
     companion object {
-        private const val RC_SIGN_IN = 123
         private const val PREF_NAME = "MyPreferences"
-        private const val KEY_FIRST_TIME = "isFirstTime"
-        private const val KEY_DARK_MODE = "isDarkMode"
         private const val KEY_JOINED = "isJoined"
         private const val KEY_LOGIN = "isLogin"
 
@@ -60,10 +56,10 @@ class MainMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Tambahkan inisialisasi status join dari SharedPreferences
-        preferences = getSharedPreferences(MainMenuActivity.PREF_NAME, Context.MODE_PRIVATE)
+        preferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         val isJoined = preferences.getBoolean("isJoined", true)
-        preferences.edit().putBoolean(MainMenuActivity.KEY_JOINED, true).apply()
-        preferences.edit().putBoolean(MainMenuActivity.KEY_LOGIN, true).apply()
+        preferences.edit().putBoolean(KEY_JOINED, true).apply()
+        preferences.edit().putBoolean(KEY_LOGIN, true).apply()
 
         val sessionManager = SessionManager(this)
         if (!sessionManager.isLogin() && !isJoined) {
@@ -79,7 +75,7 @@ class MainMenuActivity : AppCompatActivity() {
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
         // Tampilkan Fragment Home saat pertama kali activity dibuka
-        val fragment = PurchasedFragment.newInstance()
+        val fragment = HomeFragment.newInstance()
         openFragment(fragment)
     }
 

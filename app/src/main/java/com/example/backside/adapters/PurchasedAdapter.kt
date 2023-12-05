@@ -1,3 +1,5 @@
+package com.example.backside.adapters
+
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -5,13 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.backside.model.Books
 import com.example.backside.DetailActivity
 import com.example.backside.PurchasedBooks
 import com.example.backside.R
@@ -62,9 +61,7 @@ class PurchasedAdapter(private val context: Context, private var purchaseList: L
         notifyDataSetChanged()
     }
 
-    fun setOnItemClickListener(listener: (PurchasedBooks) -> Unit) {
-        itemClickListener = listener
-    }
+
 
     inner class PurchasedViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private lateinit var currentBook: PurchasedBooks
@@ -82,7 +79,7 @@ class PurchasedAdapter(private val context: Context, private var purchaseList: L
         init {
             load.setOnClickListener {
                 // Pastikan currentBook telah diinisialisasi sebelumnya saat binding
-                currentBook?.let { book ->
+                currentBook.let { book ->
                     val intent = Intent(itemView.context, DetailActivity::class.java)
                     intent.putExtra("purchase_book", book)
                     itemView.context.startActivity(intent)
@@ -103,7 +100,7 @@ class PurchasedAdapter(private val context: Context, private var purchaseList: L
 
             jumlah.text = book.jumlah + " Vote"
 
-            if (book.sudahTerbeli == false) {
+            if (!book.sudahTerbeli) {
                 terbeli.text = "Not Purchased"
                 terbeli.setTextColor(ContextCompat.getColor(context, R.color.red)) // Ganti dengan warna yang diinginkan
                 jumlah.setTextColor(ContextCompat.getColor(context, R.color.red))
