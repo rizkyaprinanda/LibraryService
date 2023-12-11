@@ -108,7 +108,7 @@ class JoinActivity : AppCompatActivity() {
 
     // Ganti tipe data respons di metode ini
     fun remoteGetPopularMovies(){
-        ApiClient.apiService.getPopularMovies().enqueue(object : Callback<ResponseModel>{
+        ApiClient2.apiService.getPopularMovies().enqueue(object : Callback<ResponseModel>{
             override fun onResponse(
                 call: Call<ResponseModel>,
                 response: Response<ResponseModel>

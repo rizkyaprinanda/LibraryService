@@ -1,12 +1,17 @@
 
 package com.example.backside.utils
 
+import com.example.backside.model.Books
+import com.example.backside.model.BooksCollections
 import com.example.backside.model.Institutions
 import retrofit2.Call
 import retrofit2.http.GET
 
-interface ApiInstitutionService {
+interface ApiService {
 
     @GET("institution.json")
     fun getInstitutions(): Call<List<Institutions>>
+
+    @GET("books/-Nl6v4q6QU31wu2WSkbV.json")
+    fun getBooks(): Call<List<BooksCollections>>
 }
