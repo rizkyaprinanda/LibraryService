@@ -101,11 +101,11 @@ class BrowserAdapter(private val context: Context, private var bookList: List<Bo
 
 
             if(!book.sudahVote){
-                mantepLayout.setBackgroundResource(R.drawable.bgup)
+                mantepLayout?.setBackgroundResource(R.drawable.bgup)
             }else{
-                mantepLayout.setBackgroundResource(R.drawable.bgupnew)
+                mantepLayout?.setBackgroundResource(R.drawable.bgupnew)
             }
-            mantepLayout.setOnClickListener{
+            mantepLayout?.setOnClickListener{
 
 
 

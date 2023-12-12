@@ -9,7 +9,7 @@ data class PurchasedBooks(
     val judul: String,
     val penulis: String,
     val kategori: String,
-    var jumlah: String,
+    var jumlah: Int,
     var sudahVote: Boolean,
     var sudahTerbeli: Boolean,
     var deskripsi: String,

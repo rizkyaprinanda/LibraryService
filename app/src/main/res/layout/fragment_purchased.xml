@@ -43,6 +43,7 @@
             tools:ignore="MissingConstraints" />
 
         <LinearLayout
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -61,12 +62,6 @@
                 android:backgroundTint="#FFFFFF"
                 tools:ignore="TouchTargetSizeCheck" />
 
-            <!--            <ImageView-->
-            <!--                android:id="@+id/imageView2"-->
-            <!--                android:layout_width="10dp"-->
-            <!--                android:layout_height="10dp"-->
-            <!--                android:layout_weight="1"-->
-            <!--                android:src="@drawable/dropdown" />-->
         </LinearLayout>
 
 

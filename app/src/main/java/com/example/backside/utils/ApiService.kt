@@ -9,7 +9,7 @@ import retrofit2.http.GET
 
 interface ApiService {
 
-    @GET("institution.json")
+    @GET("institution/-Nkp_aXG-xrmzG04QveB.json")
     fun getInstitutions(): Call<List<Institutions>>
 
     @GET("books/-Nl6v4q6QU31wu2WSkbV.json")

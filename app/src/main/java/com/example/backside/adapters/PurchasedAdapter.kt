@@ -98,7 +98,7 @@ class PurchasedAdapter(private val context: Context, private var purchaseList: L
             penulis.text = book.penulis
             terbeli.text = "Belum"
 
-            jumlah.text = book.jumlah + " Vote"
+            jumlah.text = "${book.jumlah} Vote"
 
             if (!book.sudahTerbeli) {
                 terbeli.text = "Not Purchased"
