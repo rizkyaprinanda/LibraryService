@@ -70,15 +70,11 @@ class DetailActivity : AppCompatActivity() {
 
 
 
-                        Toast.makeText(this, "Berhasil upvote buku ${book.judul}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Successfully upvoted the book ${book.judul}", Toast.LENGTH_SHORT).show()
 
                     }
 
                 }
-
-                // Jika Anda menggunakan gambar, tampilkan gambar buku di ImageView
-                // val bookImageView: ImageView = findViewById(R.id.bookImageView)
-                // bookImageView.setImageResource(bookImage)
 
             }
 
@@ -92,13 +88,8 @@ class DetailActivity : AppCompatActivity() {
                 val bookImage = book.imgBook
                 val bookDeskripsi = book.deskripsi
 
-//
-//                val titleTextView: TextView = findViewById(R.id.titleTextView)
-//                val authorTextView: TextView = findViewById(R.id.authorTextView)
-//                val categoryTextView: TextView = findViewById(R.id.categoryTextView)
-
                 juduldetail.text = bookTitle
-                jumlah.text = jumlahbook
+                jumlah.text = jumlahbook.toString()
                 penulisdetail.text = bookAuthor
                 deskripsi.text = bookDeskripsi
                 image.setImageResource(bookImage)
@@ -106,18 +97,14 @@ class DetailActivity : AppCompatActivity() {
                 upvote.setOnClickListener {
                     selectedBook.let{ book ->
 
-                //                        val index = books!!.indexOfFirst { it.judul == book.judul }
-                //                        if (index != -1) {
-                //                            books[index].jumlah = (books[index].jumlah.toInt() + 1).toString()
-                //                        }
 
                         if(book.sudahVote){
-                            book.jumlah = (book.jumlah.toInt() - 1).toString()
-                            jumlah.text = book.jumlah
+                            book.jumlah = book.jumlah - 1
+                            jumlah.text = book.jumlah.toString()
                             book.sudahVote = false
                         }else{
-                            book.jumlah = (book.jumlah.toInt() + 1).toString()
-                            jumlah.text = book.jumlah
+                            book.jumlah = book.jumlah+ 1
+                            jumlah.text = book.jumlah.toString()
                             book.sudahVote = true
                         }
 
@@ -127,7 +114,7 @@ class DetailActivity : AppCompatActivity() {
 
 
 
-                        Toast.makeText(this, "Berhasil upvote buku ${book.judul}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Successfully upvoted the book ${book.judul}", Toast.LENGTH_SHORT).show()
 
                     }
 

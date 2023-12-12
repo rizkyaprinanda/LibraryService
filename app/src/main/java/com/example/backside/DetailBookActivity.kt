@@ -1,78 +1,98 @@
 package com.example.backside
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.backside.databinding.ActivityDetailBookBinding
-import com.example.backside.model.Books
+import com.example.backside.model.BooksCollections
 
-
-@Suppress("DEPRECATION")
 class DetailBookActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityDetailBookBinding
-    companion object {
-        fun defaultBook(): Books {
-            return Books(0, "", "", "", "", false, "", 0.0)
-        }
-    }
+    private lateinit var binding: ActivityDetailBookBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val image = findViewById<ImageView>(R.id.gambardetail)
-        val juduldetail = findViewById<TextView>(R.id.juduldetail)
-        val penulisdetail = findViewById<TextView>(R.id.penulisdetail)
-        val deskripsi = findViewById<TextView>(R.id.deskripsi)
-        val jumlah = findViewById<TextView>(R.id.jumlahvotedetail)
-        val rating = findViewById<TextView>(R.id.tvRating)
+        val upvote = findViewById<FrameLayout>(R.id.butonvote)
 
+        val selectedBook = intent.getSerializableExtra("book") as? BooksCollections
+        if (selectedBook != null) {
+            val formattedRating = String.format("%.1f", selectedBook.rating)
 
-        val selectedBook: Books = intent.getParcelableExtra("purchase_book") ?: defaultBook()
+            binding.tvBookTitle.text = selectedBook.title
+            binding.tvAuthor.text = selectedBook.author
+            binding.tvRating.text = formattedRating
+            binding.tvCategory.text = selectedBook.genre
+            binding.descriptionBook.text = selectedBook.description
+            binding.bookCount.text = selectedBook.count.toString()
 
-        juduldetail.text = selectedBook.judul
-        jumlah.text = selectedBook.jumlah
-        penulisdetail.text = selectedBook.penulis
-        deskripsi.text = selectedBook.deskripsi
-        rating.text = selectedBook.rating.toString()
-        image.setImageResource(selectedBook.imgBook)
+            val image = selectedBook.image
 
-        binding.butonvote.setOnClickListener {
-            selectedBook.let{ book ->
+            Glide.with(this)
+                .load(image)
+                .fitCenter()
+                .into(binding.detailImageBook)
 
-        //                        val index = books!!.indexOfFirst { it.judul == book.judul }
-        //                        if (index != -1) {
-        //                            books[index].jumlah = (books[index].jumlah.toInt() + 1).toString()
-        //                        }
-
-                if(book.sudahVote){
-                    book.jumlah = (book.jumlah.toInt() - 1).toString()
-                    jumlah.text = book.jumlah
-                    book.sudahVote = false
-                }else{
-                    book.jumlah = (book.jumlah.toInt() + 1).toString()
-                    jumlah.text = book.jumlah
-                    book.sudahVote = true
-                }
-
-
-
-
-
-
-
-                Toast.makeText(this, "Berhasil upvote buku ${book.judul}", Toast.LENGTH_SHORT).show()
-
+            binding.imgBack.setOnClickListener {
+                onBackPressed()
             }
 
-        }
+            upvote.setOnClickListener {
+                selectedBook.let { book ->
+                    if (book.isVote) {
+                        book.count = (book.count - 1)
+                        binding.bookCount.text = book.count.toString()
+                        book.isVote = false
+                        Toast.makeText(this, "Oops, you downvoted the book ${selectedBook.title}", Toast.LENGTH_SHORT).show()
+                    } else {
+                        book.count = (book.count + 1)
+                        binding.bookCount.text = book.count.toString()
+                        book.isVote = true
+                        Toast.makeText(this, "Successfully upvoted the book ${selectedBook.title}", Toast.LENGTH_SHORT).show()
+                    }
 
-        binding.imgBack.setOnClickListener{
-            onBackPressed()
+                }
+            }
+
+        } else {
+            val purchasedBook = intent.getParcelableExtra<PurchasedBooks>("purchase_book")
+
+            purchasedBook?.let { book ->
+                binding.tvBookTitle.text = book.judul
+                binding.bookCount.text = book.jumlah.toString()
+                binding.tvAuthor.text = book.penulis
+                binding.descriptionBook.text = book.deskripsi
+                Glide.with(this)
+                    .load(book.imgBook)
+                    .fitCenter()
+                    .into(binding.detailImageBook)
+
+                binding.imgBack.setOnClickListener {
+                    onBackPressed()
+                }
+
+                upvote.setOnClickListener {
+                    book.let { purchasedBook ->
+                        if (purchasedBook.sudahVote) {
+                            purchasedBook.jumlah = (purchasedBook.jumlah - 1)
+                            binding.bookCount.text = purchasedBook.jumlah.toString()
+                            purchasedBook.sudahVote = false
+                            Toast.makeText(this, "Oops, you downvoted the book ${purchasedBook.judul}", Toast.LENGTH_SHORT).show()
+
+                        } else {
+                            purchasedBook.jumlah = (purchasedBook.jumlah + 1)
+                            binding.bookCount.text = purchasedBook.jumlah.toString()
+                            purchasedBook.sudahVote = true
+                        }
+
+                        Toast.makeText(this, "Successfully upvoted the book ${purchasedBook.judul}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
     }
 }

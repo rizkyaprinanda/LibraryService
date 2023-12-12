@@ -20,7 +20,7 @@ import com.example.backside.MainMenuActivity
 import com.example.backside.R
 import com.example.backside.databinding.ActivityHomeBeforeJoinBinding
 import com.example.backside.model.Institutions
-import com.example.backside.utils.ApiInstitutionClient
+import com.example.backside.utils.ApiClient
 import com.example.backside.utils.SessionManager
 import com.example.backside.view.auth.LoginActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -176,7 +176,7 @@ class HomeBeforeJoinActivity : AppCompatActivity() {
     }
 
     private fun remoteGetInstitutions() {
-        ApiInstitutionClient.apiInstitutionService.getInstitutions().enqueue(object : Callback<List<Institutions>> {
+        ApiClient.apiService.getInstitutions().enqueue(object : Callback<List<Institutions>> {
             override fun onResponse(
                 call: Call<List<Institutions>>,
                 response: Response<List<Institutions>>

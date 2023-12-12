@@ -7,12 +7,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-object ApiClient {
+object ApiClient2 {
 
     private const val BASE_URL = "https://api.themoviedb.org/3/movie/"
     private const val API_KEY = "c91b07124c855f7577ce56962639cd93"
 
-    val apiService: ApiService
+    val apiService: ApiService2
         get() {
             val interceptor = HttpLoggingInterceptor()
             interceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -25,10 +25,10 @@ object ApiClient {
                 .baseUrl(BASE_URL)
                 .build()
 
-            return retrofit.create(ApiService::class.java)
+            return retrofit.create(ApiService2::class.java)
         }
 
-    val apiServiceWithApiKey: ApiService
+    val apiServiceWithApiKey: ApiService2
         get() {
             val interceptor = HttpLoggingInterceptor()
             interceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -54,6 +54,6 @@ object ApiClient {
                 .baseUrl(BASE_URL)
                 .build()
 
-            return retrofit.create(ApiService::class.java)
+            return retrofit.create(ApiService2::class.java)
         }
 }

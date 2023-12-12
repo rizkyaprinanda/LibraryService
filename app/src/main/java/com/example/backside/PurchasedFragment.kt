@@ -3,6 +3,8 @@ package com.example.backside
 import com.example.backside.adapters.PurchasedAdapter
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.Fragment
@@ -14,6 +16,7 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -40,6 +43,21 @@ class PurchasedFragment : Fragment() {
         val spinner: Spinner = view.findViewById(R.id.spinner)
         val search = view.findViewById<EditText>(R.id.search)
         val adapcher = ArrayAdapter(requireContext(), R.layout.custom_spinner, data)
+        var doubleBackPressedOnce = false
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (!doubleBackPressedOnce) {
+                    Toast.makeText(requireContext(), "Press again to exit", Toast.LENGTH_SHORT).show()
+                    doubleBackPressedOnce = true
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        doubleBackPressedOnce = false
+                    }, 2000)
+                } else {
+                    requireActivity().finish()
+                }
+            }
+        })
 
 
 
@@ -56,7 +74,7 @@ class PurchasedFragment : Fragment() {
                 judul = "House Of Shadows",
                 penulis = "Nicola Cornick",
                 kategori = "Fiksi Sejarah",
-                jumlah = "50",
+                jumlah = 50,
                 sudahVote = false,
                 sudahTerbeli = false,
                 deskripsi = "Sebuah kisah fiksi sejarah yang menggali rumah berhantu dengan lapisan misteri di setiap sudutnya. Melalui penulisan Nicola Cornick, pembaca akan diajak untuk meresapi atmosfir zaman dulu dan menyelidiki rahasia yang tersembunyi dalam bayang-bayang rumah tersebut.",
@@ -67,7 +85,7 @@ class PurchasedFragment : Fragment() {
                 judul = "Salt To The Sea",
                 penulis = "Ruta Sepetys",
                 kategori = "Fiksi Sejarah",
-                jumlah = "5",
+                jumlah = 5,
                 sudahVote = true,
                 sudahTerbeli = true,
                 deskripsi = "Sebuah perjalanan epik melintasi laut pada masa Perang Dunia II. Ruta Sepetys membawa pembaca ke dalam kehidupan empat orang yang terjebak dalam kisah dramatis kapal karam Wilhelm Gustloff. Pengalaman pahit dan getir perang terungkap melalui mata para karakter yang berusaha bertahan hidup.",
@@ -78,7 +96,7 @@ class PurchasedFragment : Fragment() {
                 judul = "Luka Kata",
                 penulis = "Candra Malik",
                 kategori = "Romance",
-                jumlah = "0",
+                jumlah = 0,
                 sudahVote = false,
                 sudahTerbeli = false,
                 deskripsi = "Kisah romantis yang mengisahkan perjalanan dua hati yang saling terluka. Candra Malik dengan indah menyampaikan konflik emosional dan keindahan cinta melalui kata-kata yang menyentuh. Novel ini mengajak pembaca untuk menjelajahi dunia perasaan yang dalam dan penuh makna.",
@@ -89,7 +107,7 @@ class PurchasedFragment : Fragment() {
                 judul = "Cantik Itu Luka",
                 penulis = "Eka Kurniawan",
                 kategori = "Romance",
-                jumlah = "10",
+                jumlah = 10,
                 sudahVote = true,
                 sudahTerbeli = true,
                 deskripsi = "Eka Kurniawan menghadirkan kisah penuh warna tentang kecantikan dan luka di sepanjang perjalanan hidup seorang wanita. Dengan sentuhan magis dalam bahasa penceritaannya, novel ini mengeksplorasi kompleksitas hubungan dan keindahan yang muncul dari setiap lukisan kata.",
@@ -97,7 +115,7 @@ class PurchasedFragment : Fragment() {
             )
 
 
-            )
+        )
 
         val adapter = PurchasedAdapter(requireContext(), book) // Gunakan requireContext()
 

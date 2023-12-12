@@ -8,18 +8,25 @@
     tools:context=".VoteBookProfileFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvVoteProfile"
-        android:layout_width="wrap_content"
+        android:id="@+id/rvBrowser"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:backgroundTint="#FFFDFD"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:foregroundGravity="center_horizontal"
+        android:focusable="auto"
+        android:foregroundTint="#FFFBFB"
         android:pointerIcon="cell"
         app:spanCount="2"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        android:nestedScrollingEnabled="true"
-        tools:listitem="@layout/items_browser" />
+        tools:listitem="@layout/items_books" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        app:flow_horizontalAlign="center" />
 </FrameLayout>
 

@@ -121,7 +121,7 @@
                     android:layout_weight="1">
 
                     <LinearLayout
-                        android:id="@+id/mantep"
+                        android:id="@+id/llUpvote"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:layout_gravity="center_horizontal|center_vertical|end"

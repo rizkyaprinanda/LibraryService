@@ -1,119 +1,113 @@
 package com.example.backside
 
-import com.example.backside.adapters.HomeRekomendasiAdapter
-import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.backside.model.Books
-
+import com.example.backside.adapters.BooksAdapter
+import com.example.backside.databinding.FragmentHomeBinding
+import com.example.backside.model.BooksCollections
+import com.example.backside.utils.ApiClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class HomeFragment : Fragment() {
+    private lateinit var binding: FragmentHomeBinding
+    private lateinit var adapter1: BooksAdapter
+    private lateinit var adapter2: BooksAdapter
+    private lateinit var originalData: List<BooksCollections>
+    private lateinit var progressBar: ProgressBar
+    private lateinit var progressBar2: ProgressBar
+    private var doubleBackPressedOnce = false
+
     companion object {
         fun newInstance(): HomeFragment {
             return HomeFragment()
         }
     }
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
-//        return inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val view = binding.root
 
-        val book = listOf(
-            Books(
-                imgBook = R.drawable.gambar,
-                judul = "Luka Kata",
-                penulis = "Candra Malik",
-                kategori = "Romance",
-                jumlah = "0",
-                sudahVote = false,
-                deskripsi = "Sebuah kisah cinta yang penuh dengan kata-kata indah dan menyentuh hati. Di dalamnya, Candra Malik menggambarkan lika-liku percintaan antara dua karakter utama yang penuh dengan konflik dan kebahagiaan.",
-                rating = 7.2
-        ), Books(
-                imgBook = R.drawable.gambar,
-                judul = "Luka Kata",
-                penulis = "Candra Malik",
-                kategori = "Romance",
-                jumlah = "0",
-                sudahVote = false,
-                deskripsi = "Kisah cinta yang melibatkan pertarungan batin dan perjuangan untuk mencari arti sejati dari kata-kata. Sebuah perjalanan emosional yang memikat pembaca hingga halaman terakhir.",
-                rating = 7.2
-        ), Books(
-                imgBook = R.drawable.gambar5,
-                judul = "Cantik Itu Luka",
-                penulis = "Eka Kurniawan",
-                kategori = "Romance",
-                jumlah = "1",
-                sudahVote = false,
-                deskripsi = "Sebuah novel epik yang mengeksplorasi kecantikan dan penderitaan. Eka Kurniawan berhasil menciptakan dunia yang penuh warna dengan karakter-karakter yang tak terlupakan.",
-                rating = 8.5
-        ), Books(
-                imgBook = R.drawable.gambar2,
-                judul = "Salt To The Sea",
-                penulis = "Ruta Sepetys",
-                kategori = "Fiksi Sejarah",
-                jumlah = "0",
-                sudahVote = false,
-                deskripsi = "Sebuah kisah tragis tentang perjalanan melintasi lautan selama Perang Dunia II. Ruta Sepetys dengan cemerlang menuliskan pengalaman para karakter dengan penuh empati.",
-                rating = 9.0
-        ), Books(
-                imgBook = R.drawable.gambar4,
-                judul = "House Of Shadows",
-                penulis = "Nicola Cornick",
-                kategori = "Fiksi Sejarah",
-                jumlah = "0",
-                sudahVote = false,
-                deskripsi = "Rumah berhantu yang menyimpan misteri sepanjang masa. Nicola Cornick mengajak pembaca untuk menelusuri setiap sudut rumah tersebut dalam perjalanan yang penuh teka-teki.",
-                rating = 8.2
-        ), Books(
-                imgBook = R.drawable.gambarku,
-                judul = "All The Light We Cannot See",
-                penulis = "Anthony Doerr",
-                kategori = "Fiksi Sejarah",
-                jumlah = "0",
-                sudahVote = false,
-                deskripsi = "Sebuah kisah indah tentang kehidupan selama Perang Dunia II. Anthony Doerr berhasil menangkap esensi keajaiban di tengah kegelapan.",
-                rating = 9.5
-        ), Books(
-                imgBook = R.drawable.gambarku,
-                judul = "All The Light We Cannot See",
-                penulis = "Anthony Doerr",
-                kategori = "Aksi",
-                jumlah = "0",
-                sudahVote = false,
-                deskripsi = "Sebuah cerita aksi yang memacu adrenalin. Anthony Doerr menggabungkan elemen-elemen thriller dengan nuansa sejarah yang mendalam.",
-                rating = 8.0
-        )
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (!doubleBackPressedOnce) {
+                    Toast.makeText(requireContext(), "Press again to exit", Toast.LENGTH_SHORT).show()
+                    doubleBackPressedOnce = true
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        doubleBackPressedOnce = false
+                    }, 2000)
+                } else {
+                    requireActivity().finish()
+                }
+            }
+        })
 
+        progressBar = binding.progressBar
+        progressBar2 = binding.progressBar2
 
+        adapter1 = BooksAdapter(requireContext(), arrayListOf())
+        adapter2 = BooksAdapter(requireContext(), arrayListOf())
 
-
-        )
-
-        val adapter = HomeRekomendasiAdapter(requireContext(), book) // Gunakan requireContext()
-
-
-
-        val recyclerView: RecyclerView = view.findViewById(R.id.recycler1)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
-
+        val recyclerView1: RecyclerView = view.findViewById(R.id.recycler1)
+        recyclerView1.adapter = adapter1
+        recyclerView1.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         val recyclerView2: RecyclerView = view.findViewById(R.id.recycler2)
-        recyclerView2.adapter = adapter
-        recyclerView2.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView2.adapter = adapter2
+        recyclerView2.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
+        progressBar.visibility = View.VISIBLE
+        remoteGetBooks()
 
         return view
     }
 
+    private fun remoteGetBooks() {
+        val call = ApiClient.apiService.getBooks()
+        call.enqueue(object : Callback<List<BooksCollections>> {
+            override fun onResponse(call: Call<List<BooksCollections>>, response: Response<List<BooksCollections>>) {
+                progressBar.visibility = View.GONE
+
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    data?.let {
+                        val shuffledData = it.toMutableList().shuffled()
+                        setDataToAdapters(shuffledData)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<BooksCollections>>, t: Throwable) {
+                progressBar.visibility = View.GONE
+                // Handle kegagalan pengambilan data
+            }
+        })
+    }
+
+    private fun setDataToAdapters(data: List<BooksCollections>) {
+        originalData = data
+        adapter1.setData(data)
+        adapter2.setData(data)
+    }
+
+    private fun navigateToDetailBook(selectedBook: BooksCollections) {
+        val intent = Intent(requireContext(), DetailBookActivity::class.java)
+        intent.putExtra("book", selectedBook)
+        startActivity(intent)
+    }
 }
