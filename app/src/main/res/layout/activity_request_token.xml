@@ -57,8 +57,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_bold"
-            android:text="Please enter your Library Id"
-            android:textSize="24sp"
+            android:text="Please enter your Library Token"
+            android:textSize="20sp"
             android:layout_margin="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +67,7 @@
             app:layout_constraintVertical_bias="0.052" />
 
         <TextView
-            android:id="@+id/tvToAccessToken3"
+            android:id="@+id/tvInstitutionName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -84,7 +84,7 @@
         
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/edtInstitutionToken"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginHorizontal="20dp"
@@ -94,7 +94,7 @@
             android:background="@drawable/pop_up_form_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvToAccessToken3" />
+            app:layout_constraintTop_toBottomOf="@+id/tvInstitutionName" />
 
         <Button
             android:id="@+id/btnJoinToHome"
@@ -103,7 +103,7 @@
             android:layout_margin="20dp"
             android:fontFamily="@font/montserrat_bold"
             android:text="Join"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:background="@drawable/radiusbutton"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

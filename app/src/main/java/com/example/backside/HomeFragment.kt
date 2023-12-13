@@ -1,6 +1,5 @@
 package com.example.backside
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,6 +12,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.backside.adapters.BooksAdapter
 import com.example.backside.databinding.FragmentHomeBinding
 import com.example.backside.model.BooksCollections
@@ -29,6 +29,7 @@ class HomeFragment : Fragment() {
     private lateinit var progressBar: ProgressBar
     private lateinit var progressBar2: ProgressBar
     private var doubleBackPressedOnce = false
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     companion object {
         fun newInstance(): HomeFragment {
@@ -39,7 +40,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
 
@@ -57,6 +58,13 @@ class HomeFragment : Fragment() {
             }
         })
 
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
+        swipeRefreshLayout.setOnRefreshListener {
+            // Aksi refresh
+            // Taruh logika refresh data di sini
+            refreshData()
+        }
+
         progressBar = binding.progressBar
         progressBar2 = binding.progressBar2
 
@@ -72,12 +80,13 @@ class HomeFragment : Fragment() {
         recyclerView2.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         progressBar.visibility = View.VISIBLE
-        remoteGetBooks()
+        remoteGetBooks(progressBar)
+        remoteGetBooks(progressBar2)
 
         return view
     }
 
-    private fun remoteGetBooks() {
+    private fun remoteGetBooks(progressBar: ProgressBar) {
         val call = ApiClient.apiService.getBooks()
         call.enqueue(object : Callback<List<BooksCollections>> {
             override fun onResponse(call: Call<List<BooksCollections>>, response: Response<List<BooksCollections>>) {
@@ -99,15 +108,19 @@ class HomeFragment : Fragment() {
         })
     }
 
+    private fun refreshData() {
+        remoteGetBooks(progressBar)
+        remoteGetBooks(progressBar2)
+
+        // Setelah selesai refresh, hentikan ikon loading
+        swipeRefreshLayout.isRefreshing = false
+    }
+
     private fun setDataToAdapters(data: List<BooksCollections>) {
         originalData = data
         adapter1.setData(data)
         adapter2.setData(data)
     }
 
-    private fun navigateToDetailBook(selectedBook: BooksCollections) {
-        val intent = Intent(requireContext(), DetailBookActivity::class.java)
-        intent.putExtra("book", selectedBook)
-        startActivity(intent)
-    }
+
 }

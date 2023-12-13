@@ -96,8 +96,10 @@ class InstitutionsAdapter(
 
             btnJoin.setOnClickListener {
                 val intent = Intent(itemView.context, RequestTokenActivity::class.java)
+                intent.putExtra("SELECTED_INSTITUTION", selectedInstitution)
                 itemView.context.startActivity(intent)
             }
+
         }
     }
 

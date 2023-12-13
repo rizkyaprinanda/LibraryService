@@ -128,7 +128,7 @@ class EditProfileActivity : AppCompatActivity() {
                 // Sign out dari Google berhasil, lanjut dengan sign-out dari FirebaseAuth
                 mAuth.signOut()
                 // Ubah status login di SharedPreferences menjadi false
-                preferences.edit().putBoolean(KEY_JOINED, true).apply()
+                preferences.edit().putBoolean(KEY_JOINED, false).apply()
                 preferences.edit().putBoolean(KEY_LOGIN, false).apply()
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

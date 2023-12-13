@@ -1,6 +1,7 @@
 package com.example.backside.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Institutions(
     @SerializedName("accessToken") val accessToken: String,
@@ -10,4 +11,4 @@ data class Institutions(
     @SerializedName("location") val location: String,
     @SerializedName("name") val name: String,
     @SerializedName("uuid") val uuid: String
-)
+) : Serializable

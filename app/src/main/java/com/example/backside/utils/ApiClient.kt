@@ -8,7 +8,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ApiClient {
 
     private const val BASE_URL = "https://mylogin-3fdc8-default-rtdb.firebaseio.com/"
-    private const val API_KEY = "AIzaSyANIPSxWY4Yy9PrVBy46AGW84JGwX4YNf4"
 
     val apiService: ApiService
         get() {
