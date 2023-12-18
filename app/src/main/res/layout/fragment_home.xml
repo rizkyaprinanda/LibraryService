@@ -136,7 +136,7 @@
                                         android:src="@drawable/baseline_menu_book_24" />
 
                                     <TextView
-                                        android:id="@+id/textView50"
+                                        android:id="@+id/judultertinggi"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
@@ -167,7 +167,7 @@
                                             android:src="@drawable/polygonoke" />
 
                                         <TextView
-                                            android:id="@+id/jumlahvotebrow0"
+                                            android:id="@+id/jumlahtertinggi"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_horizontal"
@@ -297,7 +297,7 @@
                             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                             app:layout_constraintTop_toBottomOf="@+id/tvTitle"
                             app:spanCount="1"
-                            tools:listitem="@layout/items_books">
+                            tools:listitem="@layout/items_bookshome">
 
                         </androidx.recyclerview.widget.RecyclerView>
 
@@ -355,7 +355,7 @@
                             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                             app:layout_constraintTop_toBottomOf="@+id/tvTitle"
                             app:spanCount="1"
-                            tools:listitem="@layout/items_books">
+                            tools:listitem="@layout/items_bookshome">
 
                         </androidx.recyclerview.widget.RecyclerView>
 

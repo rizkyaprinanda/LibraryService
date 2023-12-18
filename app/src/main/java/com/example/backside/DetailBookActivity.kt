@@ -30,6 +30,7 @@ class DetailBookActivity : AppCompatActivity() {
             binding.descriptionBook.text = selectedBook.description
             binding.bookCount.text = selectedBook.count.toString()
 
+
             val image = selectedBook.image
 
             Glide.with(this)
@@ -67,7 +68,7 @@ class DetailBookActivity : AppCompatActivity() {
                 binding.tvAuthor.text = book.penulis
                 binding.descriptionBook.text = book.deskripsi
                 Glide.with(this)
-                    .load(book.imgBook)
+                    .load(book.img)
                     .fitCenter()
                     .into(binding.detailImageBook)
 

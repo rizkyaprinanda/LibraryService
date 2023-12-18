@@ -6,6 +6,9 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.Toast
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.example.backside.databinding.ActivityDetailBinding
 import com.example.backside.model.Books
 
@@ -85,14 +88,21 @@ class DetailActivity : AppCompatActivity() {
                 val bookTitle = book.judul
                 val bookAuthor = book.penulis
                 val jumlahbook = book.jumlah
-                val bookImage = book.imgBook
+                val bookImage = book.img
                 val bookDeskripsi = book.deskripsi
+                var linkimage = book.lingambar
 
                 juduldetail.text = bookTitle
                 jumlah.text = jumlahbook.toString()
                 penulisdetail.text = bookAuthor
                 deskripsi.text = bookDeskripsi
                 image.setImageResource(bookImage)
+                Glide.with(this)
+                    .load(linkimage) // Ganti dengan URL yang Anda dapatkan dari Google Drive
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.AUTOMATIC))
+                    .placeholder(R.drawable.gambar2) // Placeholder gambar sementara sedang dimuat
+                    .error(R.drawable.gambar4) // Gambar yang ditampilkan saat ada kesalahan
+                    .into(image)
 
                 upvote.setOnClickListener {
                     selectedBook.let{ book ->

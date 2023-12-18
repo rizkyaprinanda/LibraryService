@@ -1,115 +1,126 @@
 package com.example.backside.adapters
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.backside.DetailBookActivity
 import com.example.backside.R
-import com.example.backside.model.Books
+import com.example.backside.model.BooksCollections
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import java.io.Serializable
 
-class HomeRekomendasiAdapter(private val context: Context, private var bookList: List<Books>)
-    : RecyclerView.Adapter<HomeRekomendasiAdapter.HomeRekomendasiViewHolder>() {
+class HomeRekomendasiAdapter(
+    private val context: Context,
+    private var booksList: List<BooksCollections>,
+    private var itemClickListener: ((BooksCollections) -> Unit)? = null
+) : RecyclerView.Adapter<HomeRekomendasiAdapter.BookHolder>() {
 
+    private var originalBooksList: List<BooksCollections> = booksList.toList()
 
-    private var itemClickListener: ((Books) -> Unit)? = null
+    class BookHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val bookTitle: TextView = itemView.findViewById(R.id.tvBookTitle)
+        val bookAuthor: TextView = itemView.findViewById(R.id.tvAuthor)
+        val bookRating: TextView = itemView.findViewById(R.id.tvRatingBooks)
+        val genre: TextView = itemView.findViewById(R.id.tvCategory)
+        val layoutCard: CardView = itemView.findViewById(R.id.cvBookImage)
+        val layoutImageBook: LinearLayout = itemView.findViewById(R.id.layoutCard)
+        val imgBook: ImageView = itemView.findViewById(R.id.ivBookImage)
+        val upVote: LinearLayout = itemView.findViewById(R.id.btnUpVote)
+        val bookCount: TextView = itemView.findViewById(R.id.tvBookCount)
+    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeRekomendasiViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookHolder {
         val itemView = LayoutInflater.from(context).inflate(R.layout.items_homerekomendasi, parent, false)
-        return HomeRekomendasiViewHolder(itemView)
+        return BookHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: HomeRekomendasiViewHolder, position: Int) {
-        val books = bookList[position]
-        holder.bindView(books)
-    }
+    override fun onBindViewHolder(holder: BookHolder, position: Int) {
+        val selectedBook = booksList[position]
 
-    override fun getItemCount(): Int {
-        return bookList.size
-    }
+        with(holder) {
+            bookTitle.text = selectedBook.title
+            bookAuthor.text = selectedBook.author
+            bookRating.text = selectedBook.rating.toString()
+            genre.text = selectedBook.genre
+            bookCount.text = selectedBook.count.toString()
 
+            val storage = Firebase.storage
+            val storageRef = storage.reference
 
+            val imageRef = selectedBook.image
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setData(filteredData: List<Books>) {
-        bookList = filteredData
-        notifyDataSetChanged()
-    }
+            Glide.with(context)
+                .asBitmap()
+                .load(imageRef)
+                .fitCenter()
+                .into(object : SimpleTarget<Bitmap>() {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: Transition<in Bitmap>?
+                    ) {
+                        imgBook.setImageBitmap(resource)
+                    }
+                })
 
-    inner class HomeRekomendasiViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private lateinit var currentBook: Books
-        private val imgbrow = view.findViewById<ImageView>(R.id.gambarbrowser)
-        private val judul = view.findViewById<TextView>(R.id.judulbrow)
-        private val penulis = view.findViewById<TextView>(R.id.penulisbrow)
-        private val kategori = view.findViewById<TextView>(R.id.kategoribrow)
-        private val jumlah = view.findViewById<TextView>(R.id.jumlahvotebrow)
-        private val rating = view.findViewById<TextView>(R.id.tvRating)
-        private val mantepLayout = view.findViewById<LinearLayout>(R.id.mantep)
-        private val layout = view.findViewById<LinearLayout>(R.id.layoutCardRecommendation)
-
-        init {
-            layout.setOnClickListener {
-                // Pastikan currentBook telah diinisialisasi sebelumnya saat binding
-                currentBook.let { book ->
-                    val intent = Intent(itemView.context, DetailBookActivity::class.java)
-                    intent.putExtra("purchase_book", book)
-                    itemView.context.startActivity(intent)
-                }
+            layoutImageBook.setOnClickListener {
+                val intent = Intent(context, DetailBookActivity::class.java)
+                intent.putExtra("book", selectedBook)
+                context.startActivity(intent)
             }
-        }
 
 
+            itemView.setOnClickListener {
+                itemClickListener?.invoke(selectedBook)
+            }
 
-
-        fun bindView(book: Books) {
-            currentBook = book
-            imgbrow.setImageResource(book.imgBook)
-            judul.text = book.judul
-            penulis.text = book.penulis
-            kategori.text = book.kategori
-            jumlah.text = book.jumlah
-            rating.text = book.rating.toString()
-
-
-            if(!book.sudahVote){
-                mantepLayout.setBackgroundResource(R.drawable.bgup)
+            if(!selectedBook.isVote){
+                upVote?.setBackgroundResource(R.drawable.bgup)
             }else{
-                mantepLayout.setBackgroundResource(R.drawable.bgupnew)
+                upVote?.setBackgroundResource(R.drawable.bgupnew)
             }
-            mantepLayout.setOnClickListener{
-
-
-
-
-                if(!book.sudahVote){
-                    book.jumlah = (book.jumlah.toInt() + 1).toString()
-                    jumlah.text = book.jumlah
-                    book.sudahVote = true
-                    val message = "Berhasil up vote buku ${book.judul}"
-                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                    mantepLayout.setBackgroundResource(R.drawable.bgupnew)
-                }else{
-                    book.jumlah = (book.jumlah.toInt() - 1).toString()
-                    jumlah.text = book.jumlah
-                    book.sudahVote = false
-                    val message = "Yaah, kamu down vote buku ${book.judul}"
-                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                    mantepLayout.setBackgroundResource(R.drawable.bgup)
+            upVote?.setOnClickListener{
+                if (!selectedBook.isVote) {
+                    selectedBook.count++
+                    selectedBook.isVote = true
+                    notifyDataSetChanged()
+                } else {
+                    selectedBook.count--
+                    selectedBook.isVote = false
+                    notifyDataSetChanged()
                 }
-                itemView.setOnClickListener {
-                    itemClickListener?.invoke(book)
-                }
-
-
             }
-
         }
+    }
+
+    override fun getItemCount() = booksList.size
+
+    fun filter(query: String) {
+        val filteredList = if (query.isEmpty() || query == " ") {
+            originalBooksList.toList()
+        } else {
+            originalBooksList.filter { book ->
+                book.title.contains(query, ignoreCase = true) ||
+                        book.description.contains(query, ignoreCase = true) ||
+                        book.author.contains(query, ignoreCase = true)
+            }
+        }
+        setData(filteredList)
+    }
+
+    fun setData(filteredData: List<BooksCollections>) {
+        booksList = filteredData
+        notifyDataSetChanged()
     }
 }

@@ -4,22 +4,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:background="@drawable/bgitem"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="15dp">
 
             <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:padding="0dp"
-                app:cardCornerRadius="10dp">
+
+                app:cardCornerRadius="2dp">
 
                 <ImageView
                     android:id="@+id/gambaritem"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
 
                     android:src="@drawable/logo" />
             </androidx.cardview.widget.CardView>
@@ -71,27 +72,27 @@
                 </FrameLayout>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/judulbuku"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/montserrat_medium"
-                android:text="Luka Kata"
-                android:textColor="#FBFBFB"
-                android:textSize="10dp"
-                tools:ignore="TextSizeCheck" />
+    <TextView
+        android:id="@+id/judulbuku"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Luka Kata"
+        android:textColor="#FBFBFB"
+        android:textSize="10dp"
+        tools:ignore="TextSizeCheck" />
 
-            <TextView
-                android:id="@+id/penulisbuku"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/montserratregular"
-                android:text="Candra Malik"
-                android:textColor="#FFFCFC"
-                android:textSize="9dp"
-                tools:ignore="TextSizeCheck" />
+    <TextView
+        android:id="@+id/penulisbuku"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/montserratregular"
+        android:text="Candra Malik"
+        android:textColor="#FFFCFC"
+        android:textSize="9dp"
+        tools:ignore="TextSizeCheck" />
 
             <Button
                 android:id="@+id/load"

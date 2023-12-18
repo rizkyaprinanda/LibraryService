@@ -2,10 +2,11 @@ package com.example.backside
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 
 @Parcelize
 data class PurchasedBooks(
-    val imgBook: Int,
+    val img: Int,
     val judul: String,
     val penulis: String,
     val kategori: String,
@@ -14,4 +15,5 @@ data class PurchasedBooks(
     var sudahTerbeli: Boolean,
     var deskripsi: String,
     val rating: Double,
-) : Parcelable
+    var lingambar : String
+) : Serializable, Parcelable
