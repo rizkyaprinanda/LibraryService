@@ -1,32 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layoutCardRecommendation"
-            android:layout_width="160dp"
-            android:layout_marginHorizontal="5dp"
-            android:layout_marginVertical="10dp"
-            android:layout_gravity="center_horizontal"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="155dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginVertical="20dp"
+    android:layout_gravity="center_horizontal"
+    app:cardElevation="10dp"
+    android:background="?attr/colorPrimary"
+    android:layout_marginHorizontal="20dp"
+    app:cardCornerRadius="10dp"
+    android:id="@+id/cvMain">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#242339"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:id="@+id/layoutCard"
+            android:layout_width="155dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
             android:layout_weight="1"
-            android:minWidth="200dp"
             android:background="@drawable/bgitem"
-            android:gravity="center_vertical"
-            android:minHeight="270dp"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="5dp">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/containerGambarBrowser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/cvBookImage"
+                android:layout_width="152dp"
+                android:layout_height="224dp"
                 android:layout_gravity="center_horizontal"
-
-                android:padding="0dp"
-                app:cardCornerRadius="10dp">
+                android:background="@drawable/bgcategory"
+                android:padding="5dp"
+                app:cardCornerRadius="2dp">
 
                 <ImageView
-                    android:id="@+id/gambarbrowser"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:id="@+id/ivBookImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/on_primary_dark"
+                    android:clipToOutline="true"
+                    android:elevation="6dp"
+                    android:outlineProvider="bounds"
                     android:src="@drawable/logo" />
             </androidx.cardview.widget.CardView>
 
@@ -35,48 +56,49 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="5dp"
+                android:layout_weight="2"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:layout_weight="2"
                 android:paddingVertical="5dp">
+
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ratingstar"/>
+                    android:src="@drawable/ratingstar" />
+
                 <TextView
-                    android:id="@+id/tvRating"
+                    android:id="@+id/tvRatingBooks"
                     android:layout_width="match_parent"
-                    android:layout_gravity="center_horizontal"
                     android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
                     android:text="Rating"
                     android:textColor="@color/white"
-                    android:textSize="16sp"  />
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
             <TextView
-                android:id="@+id/judulbrow"
+                android:id="@+id/tvBookTitle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/montserrat_medium"
-                android:text="Luka Kata"
-                android:textColor="#FBFBFB"
-                android:textStyle="bold"
-                android:textSize="12sp"
-                tools:ignore="TextSizeCheck" />
+                android:layout_marginBottom="5dp"
+                android:paddingLeft="5dp"
+                android:text="Title"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/penulisbrow"
+                android:id="@+id/tvAuthor"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/montserratregular"
-                android:text="Candra Malik"
-                android:textColor="#FFFCFC"
-                android:textSize="10sp"
-                tools:ignore="TextSizeCheck" />
+                android:layout_height="30dp"
+                android:paddingLeft="5dp"
+                android:text="2023"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -85,10 +107,10 @@
                 android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-
-                android:paddingVertical="0dp">
+                android:paddingVertical="5dp">
 
                 <FrameLayout
+                    android:id="@+id/flCategory"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -98,13 +120,11 @@
                     android:paddingVertical="7dp">
 
                     <TextView
-                        android:id="@+id/kategoribrow"
+                        android:id="@+id/tvCategory"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/montserratregular"
-
+                        android:layout_weight="2"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="Romance"
                         android:textColor="#EFE2E2"
@@ -117,11 +137,12 @@
 
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
 
-                    android:layout_weight="1">
+                    android:padding="5dp">
 
                     <LinearLayout
-                        android:id="@+id/mantep"
+                        android:id="@+id/btnUpVote"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:layout_gravity="center_horizontal|center_vertical|end"
@@ -134,7 +155,7 @@
                         android:paddingVertical="5dp">
 
                         <ImageView
-                            android:id="@+id/imageView3"
+                            android:id="@+id/imageUp"
                             android:layout_width="12dp"
                             android:layout_height="12dp"
                             android:layout_gravity="center_horizontal"
@@ -142,7 +163,7 @@
                             android:src="@drawable/polygonoke" />
 
                         <TextView
-                            android:id="@+id/jumlahvotebrow"
+                            android:id="@+id/tvBookCount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
@@ -153,5 +174,8 @@
                             tools:ignore="TextSizeCheck" />
                     </LinearLayout>
                 </FrameLayout>
+
             </LinearLayout>
-            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</androidx.cardview.widget.CardView>

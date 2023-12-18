@@ -13,7 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.backside.adapters.BooksAdapter
+import com.example.backside.adapters.BookAdapter
+import com.example.backside.adapters.HomeRekomendasiAdapter
 import com.example.backside.databinding.FragmentHomeBinding
 import com.example.backside.model.BooksCollections
 import com.example.backside.utils.ApiClient
@@ -23,19 +24,25 @@ import retrofit2.Response
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var adapter1: BooksAdapter
-    private lateinit var adapter2: BooksAdapter
+    private lateinit var adapter1: HomeRekomendasiAdapter
+    private lateinit var adapter2: HomeRekomendasiAdapter
     private lateinit var originalData: List<BooksCollections>
     private lateinit var progressBar: ProgressBar
     private lateinit var progressBar2: ProgressBar
     private var doubleBackPressedOnce = false
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var bookWithMaxCount: BooksCollections
 
     companion object {
         fun newInstance(): HomeFragment {
             return HomeFragment()
         }
     }
+
+//    private fun getBookWithMaxCount() {
+//        bookWithMaxCount = originalData.maxByOrNull { it.count } ?: BooksCollections()
+//    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,8 +75,8 @@ class HomeFragment : Fragment() {
         progressBar = binding.progressBar
         progressBar2 = binding.progressBar2
 
-        adapter1 = BooksAdapter(requireContext(), arrayListOf())
-        adapter2 = BooksAdapter(requireContext(), arrayListOf())
+        adapter1 = HomeRekomendasiAdapter(requireContext(), arrayListOf())
+        adapter2 = HomeRekomendasiAdapter(requireContext(), arrayListOf())
 
         val recyclerView1: RecyclerView = view.findViewById(R.id.recycler1)
         recyclerView1.adapter = adapter1
@@ -97,6 +104,20 @@ class HomeFragment : Fragment() {
                     data?.let {
                         val shuffledData = it.toMutableList().shuffled()
                         setDataToAdapters(shuffledData)
+
+                        val bookWithMaxCount = shuffledData.random()
+                            var judultertinggi = binding.judultertinggi
+                        var jumlahtertinggi = binding.jumlahtertinggi
+                        bookWithMaxCount?.let { book ->
+                        val title = book.title
+                        val author = book.author
+                        val jumlah = book.count
+                        judultertinggi.text = title.toString()
+                        jumlahtertinggi.text = jumlah.toString()
+
+
+        }
+
                     }
                 }
             }

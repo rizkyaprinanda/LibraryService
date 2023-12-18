@@ -93,14 +93,14 @@
                             android:id="@+id/rvBrowser"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
                             android:layout_margin="10dp"
                             android:backgroundTint="#FFFDFD"
-                            android:layout_gravity="center_horizontal"
                             android:focusable="auto"
                             android:foregroundTint="#FFFBFB"
                             android:pointerIcon="cell"
-                            app:spanCount="2"
                             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                            app:spanCount="2"
                             tools:listitem="@layout/items_books" />
 
                         <TextView

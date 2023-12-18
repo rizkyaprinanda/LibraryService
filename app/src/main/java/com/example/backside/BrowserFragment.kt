@@ -80,8 +80,9 @@ class BrowserFragment : Fragment() {
 
         val spinner: Spinner = binding.spinner
 
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, genreList)
+        val adapter = ArrayAdapter(requireContext(), R.layout.custom_spinner, genreList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
         spinner.adapter = adapter
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -209,7 +210,7 @@ class BrowserFragment : Fragment() {
                         genreList.add(0, "Semua Genre")
 
                         // Update adapter spinner dengan daftar genre
-                        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, genreList)
+                        val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.custom_spinner, genreList)
                         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         binding.spinner.adapter = spinnerAdapter
                     }

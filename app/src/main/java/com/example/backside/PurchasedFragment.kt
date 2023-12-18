@@ -19,9 +19,20 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.backside.model.Books
+import com.example.backside.utils.ApiClientPurchased
+import com.example.backside.utils.ApiServicePurchased
+import retrofit2.Call
+
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class PurchasedFragment : Fragment() {
+    private lateinit var apiService: ApiServicePurchased // Ubah variabel apiClient ke apiService
+    private lateinit var apiClient: ApiClientPurchased
+    private lateinit var adapter: PurchasedAdapter
+    private var originalData: List<PurchasedBooks> = ArrayList() // Store original data
     companion object {
         fun newInstance(): PurchasedFragment {
             return PurchasedFragment()
@@ -36,88 +47,33 @@ class PurchasedFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_purchased, container, false)
-
-        // Isi dengan logika yang ada dalam BrowserActivity
-
-        val data = listOf("Semua","Romance", "Fiksi Sejarah", "Dongeng", "Aksi")
-        val spinner: Spinner = view.findViewById(R.id.spinner)
-        val search = view.findViewById<EditText>(R.id.search)
-        val adapcher = ArrayAdapter(requireContext(), R.layout.custom_spinner, data)
-        var doubleBackPressedOnce = false
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (!doubleBackPressedOnce) {
-                    Toast.makeText(requireContext(), "Press again to exit", Toast.LENGTH_SHORT).show()
-                    doubleBackPressedOnce = true
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        doubleBackPressedOnce = false
-                    }, 2000)
+        val recyclerView: RecyclerView = view.findViewById(R.id.rvPurchase)
+        apiService = ApiClientPurchased.apiService // Menginisialisasi apiService dari ApiClientPurchased
+        apiService.getData().enqueue(object : Callback<List<PurchasedBooks>> {
+            override fun onResponse(call: Call<List<PurchasedBooks>>, response: Response<List<PurchasedBooks>>) {
+                if (response.isSuccessful) {
+                    val books = response.body()
+                    books?.let {
+                        // Inisialisasi adapter dengan data yang diterima dari API
+                        adapter = PurchasedAdapter(requireContext(), it)
+                        recyclerView.adapter = adapter
+                        originalData = it
+                    }
                 } else {
-                    requireActivity().finish()
+                    // Tangani ketika respons tidak sukses di sini
                 }
+            }
+
+            override fun onFailure(call: Call<List<PurchasedBooks>>, t: Throwable) {
+                // Tangani kegagalan jaringan atau permintaan di sini
             }
         })
 
 
 
-        adapcher.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapcher
 
+        val search = view.findViewById<EditText>(R.id.search)
 
-
-
-
-        val book = listOf(
-            PurchasedBooks(
-                imgBook = R.drawable.gambar4,
-                judul = "House Of Shadows",
-                penulis = "Nicola Cornick",
-                kategori = "Fiksi Sejarah",
-                jumlah = 50,
-                sudahVote = false,
-                sudahTerbeli = false,
-                deskripsi = "Sebuah kisah fiksi sejarah yang menggali rumah berhantu dengan lapisan misteri di setiap sudutnya. Melalui penulisan Nicola Cornick, pembaca akan diajak untuk meresapi atmosfir zaman dulu dan menyelidiki rahasia yang tersembunyi dalam bayang-bayang rumah tersebut.",
-                rating = 7.0
-            ),
-            PurchasedBooks(
-                imgBook = R.drawable.gambar2,
-                judul = "Salt To The Sea",
-                penulis = "Ruta Sepetys",
-                kategori = "Fiksi Sejarah",
-                jumlah = 5,
-                sudahVote = true,
-                sudahTerbeli = true,
-                deskripsi = "Sebuah perjalanan epik melintasi laut pada masa Perang Dunia II. Ruta Sepetys membawa pembaca ke dalam kehidupan empat orang yang terjebak dalam kisah dramatis kapal karam Wilhelm Gustloff. Pengalaman pahit dan getir perang terungkap melalui mata para karakter yang berusaha bertahan hidup.",
-                rating = 8.1
-            ),
-            PurchasedBooks(
-                imgBook = R.drawable.gambar,
-                judul = "Luka Kata",
-                penulis = "Candra Malik",
-                kategori = "Romance",
-                jumlah = 0,
-                sudahVote = false,
-                sudahTerbeli = false,
-                deskripsi = "Kisah romantis yang mengisahkan perjalanan dua hati yang saling terluka. Candra Malik dengan indah menyampaikan konflik emosional dan keindahan cinta melalui kata-kata yang menyentuh. Novel ini mengajak pembaca untuk menjelajahi dunia perasaan yang dalam dan penuh makna.",
-                rating = 7.5
-            ),
-            PurchasedBooks(
-                imgBook = R.drawable.gambar5,
-                judul = "Cantik Itu Luka",
-                penulis = "Eka Kurniawan",
-                kategori = "Romance",
-                jumlah = 10,
-                sudahVote = true,
-                sudahTerbeli = true,
-                deskripsi = "Eka Kurniawan menghadirkan kisah penuh warna tentang kecantikan dan luka di sepanjang perjalanan hidup seorang wanita. Dengan sentuhan magis dalam bahasa penceritaannya, novel ini mengeksplorasi kompleksitas hubungan dan keindahan yang muncul dari setiap lukisan kata.",
-                rating = 8.3
-            )
-
-
-        )
-
-        val adapter = PurchasedAdapter(requireContext(), book) // Gunakan requireContext()
 
         search.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, start: Int, count: Int, after: Int) {
@@ -133,27 +89,30 @@ class PurchasedFragment : Fragment() {
                 println(editable.toString())
             }
         })
+        // Spinner setup and logic
+        val data = listOf("Semua","Romance", "Fiksi Sejarah", "Dongeng", "Aksi")
+        val spinner: Spinner = view.findViewById(R.id.spinner)
+        val adapcher = ArrayAdapter(requireContext(), R.layout.custom_spinner, data)
+        adapcher.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapcher
+
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
-                // Aksi yang diambil saat item dipilih
                 val selectedItem = data[position]
                 Toast.makeText(requireContext(), "Kategori dipilih: $selectedItem", Toast.LENGTH_SHORT).show()
 
-                // Ambil nilai dari Spinner saat dipilih
+                // Filter data based on Spinner selection
+                val filteredData = filterByCategory(selectedItem) // Update this line based on how you filter your data
+                if (::adapter.isInitialized) {
+                    // Filter data based on Spinner selection
+                    val filteredData = filterByCategory(selectedItem)
 
-// Filter data sesuai dengan nilai Spinner
-                val filteredData = when (spinner.selectedItem.toString()) {
-                    "Romance" -> book.filter { it.kategori == "Romance" }
-                    "Fiksi Sejarah" -> book.filter { it.kategori == "Fiksi Sejarah" }
-                    "Aksi" -> book.filter { it.kategori == "Aksi" }
-                    // Tambahkan kondisi sesuai dengan kategori yang Anda miliki
-                    else -> book // Default, tampilkan semua data
+                    // Set filtered data to the adapter
+                    adapter.setData(filteredData)
                 }
-
-                adapter.setData(filteredData)
-
+                // Set filtered data to the adapter
+//                adapter.setData(filteredData)
             }
-
 
             override fun onNothingSelected(parentView: AdapterView<*>) {
                 // Handle nothing selected if needed
@@ -164,11 +123,17 @@ class PurchasedFragment : Fragment() {
 
         //Aksi pencarian
 
-        val recyclerView: RecyclerView = view.findViewById(R.id.rvPurchase)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+//
+//        recyclerView.adapter = adapter
+//        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
 
         return view
     }
-
+    private fun filterByCategory(category: String): List<PurchasedBooks> {
+        return if (category == "Semua") {
+            originalData // Show all books
+        } else {
+            originalData.filter { it.kategori == category }
+        }
+    }
 }
